@@ -332,7 +332,7 @@ def create_distance_matrix(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, N
 	return distance_matrix, traceback_matrix
 
 
-def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int], traceback_matrix: np.ndarray,
+def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int], traceback_matrix: np.ndarray,
               seq_a: str, seq_b: str):
 	element = distance_matrix[max_element_indices]
 	previously_used = 0
@@ -391,5 +391,5 @@ def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
 
 print(align('AAATAAC', 'AATATAC', EDNAFULL_matrix, 5, 1))
 # print(align('AAATAAA', 'AATATAA', EDNAFULL_matrix, 1))
-#print(align('ACGTCTGATACGCCGTATAGTCTATCT', 'CTGATTCGCATCGTCTATCT', EDNAFULL_matrix, 5, 1))
-print(align('CGCAT','CGCCGTAT', EDNAFULL_matrix, 5, 1))
+# print(align('ACGTCTGATACGCCGTATAGTCTATCT', 'CTGATTCGCATCGTCTATCT', EDNAFULL_matrix, 5, 1))
+print(align('CGCAT', 'CGCCGTAT', EDNAFULL_matrix, 5, 1))
