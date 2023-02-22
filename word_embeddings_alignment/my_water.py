@@ -9,7 +9,8 @@ Numeric = Union[SupportsFloat, complex]
 UPPER = 1
 LEFT = 2
 SLANT = 4
-GAP_ALREADY_OPENED = 8
+GAP_OPENED_FROM_UPPER = 8
+GAP_OPENED_FROM_LEFT = 16
 AMBIGUOUS_DIRECTIONS = {UPPER | LEFT, UPPER | SLANT, LEFT | SLANT}
 GAP = '-'
 
@@ -320,13 +321,13 @@ def create_distance_matrix(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, N
 			# gap_penalty equals gap_extend if there is already a gap in a previous cell, else gap_open
 			slant = distance_matrix[i - 1, j - 1] + matrix[char_a][char_b]
 			upper = distance_matrix[i - 1, j] - (
-				gap_extend if (i > 2 and j > 1 and traceback_matrix[i - 2, j - 1] & GAP_ALREADY_OPENED) else gap_open)
+				gap_extend if (i > 2 and j > 1 and traceback_matrix[i - 2, j - 1] & GAP_OPENED_FROM_UPPER) else gap_open)
 			left = distance_matrix[i, j - 1] - (
-				gap_extend if (i > 1 and j > 2 and traceback_matrix[i - 1, j - 2] & GAP_ALREADY_OPENED) else gap_open)
+				gap_extend if (i > 1 and j > 2 and traceback_matrix[i - 1, j - 2] & GAP_OPENED_FROM_LEFT) else gap_open)
 			maximum = max(slant, upper, left, 0)
 			distance_matrix[i, j] = maximum
-			traceback_matrix[i - 1, j - 1] = (UPPER | GAP_ALREADY_OPENED if maximum == upper else 0) | \
-			                                 (LEFT | GAP_ALREADY_OPENED if maximum == left else 0) | \
+			traceback_matrix[i - 1, j - 1] = (UPPER | GAP_OPENED_FROM_UPPER if maximum == upper else 0) | \
+			                                 (LEFT | GAP_OPENED_FROM_LEFT if maximum == left else 0) | \
 			                                 (SLANT if maximum == slant else 0)
 	return distance_matrix, traceback_matrix
 
@@ -334,25 +335,41 @@ def create_distance_matrix(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, N
 def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int], traceback_matrix: np.ndarray,
               seq_a: str, seq_b: str):
 	element = distance_matrix[max_element_indices]
+	previously_used = 0
 	print(element)
 	curr_element_a, curr_element_b = max_element_indices
 	alignment = EmptyAlignment()
 	while element:
 		direction = traceback_matrix[curr_element_a - 1, curr_element_b - 1]
-		if direction in AMBIGUOUS_DIRECTIONS:
+		if direction & (SLANT | UPPER | LEFT) in AMBIGUOUS_DIRECTIONS:
 			warnings.warn("Multiple best-scoring alignments are possible", MultipleEquallyScoredPathsFromMaxTo0)
-		if direction & SLANT:
+		# first check, whether we are already extending a gap
+		if (previously_used == LEFT) and (direction & LEFT):
+			# gap on the first sequence
+			alignment.add_data(GAP, seq_b[curr_element_b - 1])
+			curr_element_b -= 1
+			previously_used = LEFT
+		elif (previously_used == UPPER) and (direction & UPPER):
+			# gap on the second sequence
+			alignment.add_data(seq_a[curr_element_a - 1], GAP)
+			curr_element_a -= 1
+			previously_used = UPPER
+		# if we are not extending a gap:
+		elif direction & SLANT:
 			alignment.add_data(seq_a[curr_element_a - 1], seq_b[curr_element_b - 1])
 			curr_element_a -= 1
 			curr_element_b -= 1
+			previously_used = 0
 		elif direction & LEFT:
 			# gap on the first sequence
 			alignment.add_data(GAP, seq_b[curr_element_b - 1])
 			curr_element_b -= 1
-		else:
+			previously_used = LEFT
+		elif direction & UPPER:
 			# gap on the second sequence
 			alignment.add_data(seq_a[curr_element_a - 1], GAP)
 			curr_element_a -= 1
+			previously_used = UPPER
 		element = distance_matrix[curr_element_a, curr_element_b]
 	alignment.set_completed()
 	return alignment
