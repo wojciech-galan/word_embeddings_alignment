@@ -389,7 +389,8 @@ def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
 	return indices
 
 
-print(align('AAATAAC', 'AATATAC', EDNAFULL_matrix, 5, 1))
-# print(align('AAATAAA', 'AATATAA', EDNAFULL_matrix, 1))
-# print(align('ACGTCTGATACGCCGTATAGTCTATCT', 'CTGATTCGCATCGTCTATCT', EDNAFULL_matrix, 5, 1))
-print(align('CGCAT', 'CGCCGTAT', EDNAFULL_matrix, 5, 1))
+if __name__ == "__main__":
+	print(align('AAATAAC', 'AATATAC', EDNAFULL_matrix, 5, 1))
+	# print(align('AAATAAA', 'AATATAA', EDNAFULL_matrix, 1))
+	# print(align('ACGTCTGATACGCCGTATAGTCTATCT', 'CTGATTCGCATCGTCTATCT', EDNAFULL_matrix, 5, 1))
+	print(align('CGCAT', 'CGCCGTAT', EDNAFULL_matrix, 5, 1))
