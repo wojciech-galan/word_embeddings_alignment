@@ -5,6 +5,7 @@ from typing import List
 from typing import Tuple
 from typing import SupportsFloat, Union
 
+from word_embeddings_alignment.SimpleAlignmentRepresentation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.my_warnings import MultipleMaxValuesInDistanceMatrix
 from word_embeddings_alignment.regular_water.matrices.EDNA_FULL import EDNAFULL_matrix
@@ -19,37 +20,12 @@ AMBIGUOUS_DIRECTIONS = {UPPER | LEFT, UPPER | SLANT, LEFT | SLANT}
 GAP = '-'
 
 
-class EmptyAlignment(object):
-
-	def __init__(self):
-		super().__init__()
-		self.seq1 = []
-		self.seq2 = []
-		self.seq1_completed = ''
-		self.seq2_completed = ''
-		self.completed = False
-
-	def set_completed(self):
-		self.completed = True
-		self.seq1_completed = ''.join(reversed(self.seq1))
-		self.seq2_completed = ''.join(reversed(self.seq2))
-
-	def add_data(self, char_a: str, char_b: str):
-		self.seq1.append(char_a)
-		self.seq2.append(char_b)
-
-	def __str__(self):
-		if not self.completed:
-			raise RuntimeError("Alignment not completed")
-		return '\n'.join([self.seq1_completed, self.seq2_completed])
-
-
 def align(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]], gap_open: Numeric,
-          gap_extend: Numeric) -> EmptyAlignment:
+          gap_extend: Numeric) -> SimpleAlignmentRepresentation:
 	distance_matrix, traceback_matrix = create_distance_matrix(seq_a, seq_b, matrix, gap_open, gap_extend)
 	max_indices_list = find_indices_of_max(distance_matrix)
 	if distance_matrix[max_indices_list[0]] == 0:
-		alignment = EmptyAlignment()
+		alignment = SimpleAlignmentRepresentation()
 		alignment.set_completed()
 		return alignment
 	elif len(max_indices_list) > 1:
@@ -90,7 +66,7 @@ def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int],
 	previously_used = 0
 	print(element)
 	curr_element_a, curr_element_b = max_element_indices
-	alignment = EmptyAlignment()
+	alignment = SimpleAlignmentRepresentation(element)
 	while element:
 		direction = traceback_matrix[curr_element_a - 1, curr_element_b - 1]
 		if direction & (SLANT | UPPER | LEFT) in AMBIGUOUS_DIRECTIONS:
@@ -123,12 +99,7 @@ def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int],
 			curr_element_a -= 1
 			previously_used = UPPER
 		element = distance_matrix[curr_element_a, curr_element_b]
-	alignment.set_completed()
 	return alignment
-
-
-# def traceback_for_forks(distance_matrix: np.ndarray, max_element_index: Tuple[int], traceback_matrix: np.ndarray,
-#                         already): pass
 
 
 def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
