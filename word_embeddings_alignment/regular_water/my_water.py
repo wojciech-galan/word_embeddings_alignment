@@ -22,21 +22,19 @@ GAP = '-'
 
 def align(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]], gap_open: Numeric,
           gap_extend: Numeric) -> SimpleAlignmentRepresentation:
-	distance_matrix, traceback_matrix = create_distance_and_traceback_matrices(seq_a, seq_b, matrix, gap_open, gap_extend)
+	distance_matrix, traceback_matrix = create_distance_and_traceback_matrices(seq_a, seq_b, matrix, gap_open,
+	                                                                           gap_extend)
 	max_indices_list = find_indices_of_max(distance_matrix)
 	if distance_matrix[max_indices_list[0]] == 0:
-		alignment = SimpleAlignmentRepresentation()
-		alignment.set_completed()
+		alignment = SimpleAlignmentRepresentation(distance_matrix[max_indices_list[0]])
 		return alignment
 	elif len(max_indices_list) > 1:
 		warnings.warn("Multiple best-scoring alignments are possible", MultipleMaxValuesInDistanceMatrix)
-	print((distance_matrix))
 	return traceback(distance_matrix, max_indices_list[0], traceback_matrix, seq_a, seq_b)
 
 
-def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]], gap_open: Numeric,
-                                           gap_extend: Numeric) -> \
-		Tuple[np.ndarray, np.ndarray]:
+def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]],
+                                           gap_open: Numeric, gap_extend: Numeric) -> Tuple[np.ndarray, np.ndarray]:
 	# create initial matrix
 	distance_matrix = np.full((len(seq_a) + 1, len(seq_b) + 1), np.NaN)
 	traceback_matrix = np.zeros((len(seq_a), len(seq_b)), dtype=np.byte)
@@ -49,7 +47,8 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[
 			# gap_penalty equals gap_extend if there is already a gap in a previous cell, else gap_open
 			slant = distance_matrix[i - 1, j - 1] + matrix[char_a][char_b]
 			upper = distance_matrix[i - 1, j] - (
-				gap_extend if (i > 2 and j > 1 and traceback_matrix[i - 2, j - 1] & GAP_OPENED_FROM_UPPER) else gap_open)
+				gap_extend if (
+						i > 2 and j > 1 and traceback_matrix[i - 2, j - 1] & GAP_OPENED_FROM_UPPER) else gap_open)
 			left = distance_matrix[i, j - 1] - (
 				gap_extend if (i > 1 and j > 2 and traceback_matrix[i - 1, j - 2] & GAP_OPENED_FROM_LEFT) else gap_open)
 			maximum = max(slant, upper, left, 0)
@@ -64,7 +63,6 @@ def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int],
               seq_a: str, seq_b: str):
 	element = distance_matrix[max_element_indices]
 	previously_used = 0
-	print(element)
 	curr_element_a, curr_element_b = max_element_indices
 	alignment = SimpleAlignmentRepresentation(element)
 	while element:
@@ -110,10 +108,3 @@ def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
 			if array[i, j] == maximum:
 				indices.append((i, j))
 	return indices
-
-
-if __name__ == "__main__":
-	print(align('AAATAAC', 'AATATAC', EDNAFULL_matrix, 5, 1))
-	# print(align('AAATAAA', 'AATATAA', EDNAFULL_matrix, 1))
-	# print(align('ACGTCTGATACGCCGTATAGTCTATCT', 'CTGATTCGCATCGTCTATCT', EDNAFULL_matrix, 5, 1))
-	print(align('CGCAT', 'CGCCGTAT', EDNAFULL_matrix, 5, 1))
