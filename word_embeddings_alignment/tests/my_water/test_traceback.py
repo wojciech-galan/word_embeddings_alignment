@@ -4,7 +4,6 @@ import numpy as np
 
 from word_embeddings_alignment.regular_water.my_water import traceback
 from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
-from word_embeddings_alignment.SimpleAlignmentRepresentation import SimpleAlignmentRepresentation
 
 
 def test_warning():
