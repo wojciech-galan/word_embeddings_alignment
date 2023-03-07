@@ -29,12 +29,12 @@ EDNAFULL_SIMPLIFIED = {'A': {'A': 5,
                        }
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def ednafull_simplified() -> Dict[str, Dict[str, int]]:
 	return EDNAFULL_SIMPLIFIED
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def linear_gap__distance_matrix_1() -> np.ndarray:
 	return np.array([
 		[0, 0, 0, 0, 0, 0, 0],
@@ -47,7 +47,7 @@ def linear_gap__distance_matrix_1() -> np.ndarray:
 	])
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def linear_gap__traceback_matrix_1() -> np.ndarray:
 	return np.array([
 		[4, 4, 18, 4, 18, 4],
@@ -59,7 +59,7 @@ def linear_gap__traceback_matrix_1() -> np.ndarray:
 	], dtype=np.byte)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def linear_gap__distance_matrix_2() -> np.ndarray:
 	return np.array([
 		[0, 0, 0, 0, 0, 0, 0, 0],
@@ -73,7 +73,7 @@ def linear_gap__distance_matrix_2() -> np.ndarray:
 	])
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def linear_gap__traceback_matrix_2() -> np.ndarray:
 	return np.array([
 		[4, 4, 18, 4, 18, 4, 4],
@@ -86,7 +86,7 @@ def linear_gap__traceback_matrix_2() -> np.ndarray:
 	], dtype=np.byte)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def linear_gap__distance_matrix_3() -> np.ndarray:
 	return np.array([
 		[0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -98,7 +98,7 @@ def linear_gap__distance_matrix_3() -> np.ndarray:
 	])
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def linear_gap__traceback_matrix_3() -> np.ndarray:
 	return np.array([
 		[4, 18, 4, 4, 18, 18, 18, 18],
@@ -109,7 +109,7 @@ def linear_gap__traceback_matrix_3() -> np.ndarray:
 	], dtype=np.byte)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def affine_gap__distance_matrix_1() -> np.ndarray:
 	return np.array([
 		[0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -121,7 +121,7 @@ def affine_gap__distance_matrix_1() -> np.ndarray:
 	])
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def affine_gap__traceback_matrix_1() -> np.ndarray:
 	return np.array([
 		[4, 18, 4, 4, 18, 0, 0, 0],

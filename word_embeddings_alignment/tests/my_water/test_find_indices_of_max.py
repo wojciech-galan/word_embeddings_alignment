@@ -3,12 +3,12 @@ import pytest
 from word_embeddings_alignment.regular_water.my_water import find_indices_of_max
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def one_max_array() -> np.ndarray:
 	return np.array([[1, 2], [4, 3]])
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def multiple_max_array() -> np.ndarray:
 	return np.array([[4, 2], [4, 3]])
 
