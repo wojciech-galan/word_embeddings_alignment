@@ -8,14 +8,11 @@ from typing import SupportsFloat, Union
 from word_embeddings_alignment.simple_alignment_representation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.my_warnings import MultipleMaxValuesInDistanceMatrix
-from word_embeddings_alignment.regular_water.matrices.edna_full import EDNAFULL_matrix
 
 Numeric = Union[SupportsFloat, complex]
 UPPER = 1
 LEFT = 2
 SLANT = 4
-# GAP_OPENED_FROM_UPPER = 8
-# GAP_OPENED_FROM_LEFT = 16
 AMBIGUOUS_DIRECTIONS = {UPPER | LEFT, UPPER | SLANT, LEFT | SLANT}
 GAP = '-'
 
@@ -35,7 +32,7 @@ def align(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]], gap_ope
 
 def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]],
                                            gap_open: Numeric, gap_extend: Numeric) -> Tuple[np.ndarray, np.ndarray]:
-	# create initial matrix
+	# create initial matrices
 	distance_matrix = np.full((len(seq_a) + 1, len(seq_b) + 1), np.NaN)
 	traceback_matrix = np.zeros((len(seq_a), len(seq_b)), dtype=np.byte)
 	# initialize first row and column
@@ -45,7 +42,7 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[
 	for i, char_a in enumerate(seq_a, 1):
 		for j, char_b in enumerate(seq_b, 1):
 			# gap_penalty equals gap_extend if there is already a gap in a previous cell, else gap_open
-			slant = distance_matrix[i - 1, j - 1] + matrix[char_a][char_b]
+			slant = distance_matrix[i - 1, j - 1] + matrix[char_a+char_b]
 			upper = distance_matrix[i - 1, j] - (
 				gap_extend if (
 						i > 2 and j > 1 and traceback_matrix[i - 2, j - 1] & UPPER) else gap_open)
