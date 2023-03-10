@@ -1,4 +1,5 @@
 import pytest
+import blosum as bl
 
 from typing import Dict
 
@@ -53,3 +54,13 @@ def test_3_affine_gap_penalty(ednafull_simplified: Dict[str, Dict[str, int]]):
 	assert a.score == 16
 	assert a.seq1 == 'ATGGC'
 	assert a.seq2 == 'ACGGC'
+
+
+def test_4_affine_gap_penalty():
+	with pytest.warns(MultipleMaxValuesInDistanceMatrix):
+		a = align(
+			'CTCTAGCATTAG', 'GTGCACCCA', bl.BLOSUM(62), 10, 1
+		)
+	assert a.score == 19
+	assert a.seq1 == 'GCA'
+	assert a.seq2 == 'GCA'
