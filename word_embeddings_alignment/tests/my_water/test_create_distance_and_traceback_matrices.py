@@ -20,9 +20,9 @@ def test_mathing_sequences__traceback_matrix(ednafull_simplified: Dict[str, Dict
 	np.testing.assert_array_equal(
 		create_distance_and_traceback_matrices('ACG', 'ACG', ednafull_simplified, 5, 5)[1],
 		np.array([
-			[4, 18, 0],
-			[9, 4, 18],
-			[0, 9, 4]
+			[4, 2, 0],
+			[1, 4, 2],
+			[0, 1, 4]
 		], dtype=np.byte)
 	)
 

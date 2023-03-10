@@ -50,10 +50,10 @@ def linear_gap__distance_matrix_1() -> np.ndarray:
 @pytest.fixture(scope="module")
 def linear_gap__traceback_matrix_1() -> np.ndarray:
 	return np.array([
-		[4, 4, 18, 4, 18, 4],
-		[4, 4, 18, 4, 4, 4],
-		[4, 4, 4, 4, 18, 4],
-		[4, 4, 4, 4, 22, 4],
+		[4, 4, 2, 4, 2, 4],
+		[4, 4, 2, 4, 4, 4],
+		[4, 4, 4, 4, 2, 4],
+		[4, 4, 4, 4, 6, 4],
 		[4, 4, 4, 4, 4, 4],
 		[4, 4, 4, 4, 4, 4]
 	], dtype=np.byte)
@@ -76,13 +76,13 @@ def linear_gap__distance_matrix_2() -> np.ndarray:
 @pytest.fixture(scope="module")
 def linear_gap__traceback_matrix_2() -> np.ndarray:
 	return np.array([
-		[4, 4, 18, 4, 18, 4, 4],
-		[4, 4, 18, 4, 18, 4, 4],
-		[4, 4, 18, 4, 18, 4, 4],
-		[9, 9, 4, 18, 4, 18, 18],
-		[4, 4, 9, 4, 18, 4, 22],
-		[4, 4, 9, 13, 27, 4, 4],
-		[4, 4, 9, 13, 27, 13, 4]
+		[4, 4, 2, 4, 2, 4, 4],
+		[4, 4, 2, 4, 2, 4, 4],
+		[4, 4, 2, 4, 2, 4, 4],
+		[1, 1, 4, 2, 4, 2, 2],
+		[4, 4, 1, 4, 2, 4, 6],
+		[4, 4, 1, 5, 3, 4, 4],
+		[4, 4, 1, 5, 3, 5, 4]
 	], dtype=np.byte)
 
 
@@ -101,11 +101,11 @@ def linear_gap__distance_matrix_3() -> np.ndarray:
 @pytest.fixture(scope="module")
 def linear_gap__traceback_matrix_3() -> np.ndarray:
 	return np.array([
-		[4, 18, 4, 4, 18, 18, 18, 18],
-		[9, 4, 18, 18, 4, 18, 18, 18],
-		[4, 9, 4, 22, 18, 18, 18, 18],
-		[9, 9, 9, 27, 27, 27, 4, 18],
-		[9, 9, 9, 27, 27, 4, 27, 4]
+		[4, 2, 4, 4, 2, 2, 2, 2],
+		[1, 4, 2, 2, 4, 2, 2, 2],
+		[4, 1, 4, 6, 2, 2, 2, 2],
+		[1, 1, 1, 3, 3, 3, 4, 2],
+		[1, 1, 1, 3, 3, 4, 3, 4]
 	], dtype=np.byte)
 
 
@@ -124,9 +124,9 @@ def affine_gap__distance_matrix_1() -> np.ndarray:
 @pytest.fixture(scope="module")
 def affine_gap__traceback_matrix_1() -> np.ndarray:
 	return np.array([
-		[4, 18, 4, 4, 18, 0, 0, 0],
-		[9, 4, 18, 18, 4, 18, 18, 18],
-		[4, 9, 4, 22, 18, 18, 18, 18],
-		[9, 9, 9, 4, 22, 22, 4, 18],
-		[0, 9, 9, 13, 4, 4, 9, 4]
+		[4, 2, 4, 4, 2, 0, 0, 0],
+		[1, 4, 2, 2, 4, 2, 2, 2],
+		[4, 1, 4, 6, 2, 2, 2, 2],
+		[1, 1, 1, 4, 6, 6, 4, 2],
+		[0, 1, 1, 5, 4, 4, 1, 4]
 	], dtype=np.ndarray)
