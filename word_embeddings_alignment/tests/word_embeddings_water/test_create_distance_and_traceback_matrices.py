@@ -112,7 +112,7 @@ def test_short_aligned_4_partially_matching_nucleotides_no_mocks(embeddings: np.
 	tm_template = np.array([
 		[0, 0, 0, 0],
 		[0, 0, 0, 0],
-		[0, 0, 4, 18],
-		[0, 0, 9, 27]
+		[0, 0, 4, 2],
+		[0, 0, 1, 3]
 	])
 	np.testing.assert_array_equal(tm, tm_template)

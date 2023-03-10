@@ -12,8 +12,6 @@ Numeric = Union[SupportsFloat, complex]
 UPPER = 1
 LEFT = 2
 SLANT = 4
-GAP_OPENED_FROM_UPPER = 8
-GAP_OPENED_FROM_LEFT = 16
 AMBIGUOUS_DIRECTIONS = {UPPER | LEFT, UPPER | SLANT, LEFT | SLANT}
 GAP = '-'
 
@@ -37,9 +35,9 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 				slant = 0
 			upper = distance_matrix[i - 1, j] - (
 				gap_extend if (
-						i > 2 and j > 1 and traceback_matrix[i - 2, j - 1] & GAP_OPENED_FROM_UPPER) else gap_open)
+						i > 2 and j > 1 and traceback_matrix[i - 2, j - 1] & UPPER) else gap_open)
 			left = distance_matrix[i, j - 1] - (
-				gap_extend if (i > 1 and j > 2 and traceback_matrix[i - 1, j - 2] & GAP_OPENED_FROM_LEFT) else gap_open)
+				gap_extend if (i > 1 and j > 2 and traceback_matrix[i - 1, j - 2] & LEFT) else gap_open)
 			maximum = max(slant, upper, left, 0)
 			print(i, j, slant, upper, left)
 			# import pdb
@@ -54,14 +52,14 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 			elif traceback_matrix[i - 1, j - 1] == SLANT and distance_matrix[i, j] > maximum:
 				pass
 			elif traceback_matrix[i - 1, j - 1] == SLANT and distance_matrix[i, j] == maximum:
-				traceback_matrix[i - 1, j - 1] |= UPPER | GAP_OPENED_FROM_UPPER if maximum == upper else 0
-				traceback_matrix[i - 1, j - 1] |= LEFT | GAP_OPENED_FROM_LEFT if maximum == left else 0
+				traceback_matrix[i - 1, j - 1] |= UPPER if maximum == upper else 0
+				traceback_matrix[i - 1, j - 1] |= LEFT if maximum == left else 0
 			elif (traceback_matrix[i - 1, j - 1] == SLANT and distance_matrix[i, j] < maximum) \
 					or \
 				 (traceback_matrix[i - 1, j - 1] == 0):
 				distance_matrix[i, j] = maximum
-				traceback_matrix[i - 1, j - 1] = UPPER | GAP_OPENED_FROM_UPPER if maximum == upper else 0
-				traceback_matrix[i - 1, j - 1] |= LEFT | GAP_OPENED_FROM_LEFT if maximum == left else 0
+				traceback_matrix[i - 1, j - 1] = UPPER if maximum == upper else 0
+				traceback_matrix[i - 1, j - 1] |= LEFT if maximum == left else 0
 			else:
 				# should never happen
 				pdb.set_trace()
