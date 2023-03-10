@@ -1,6 +1,6 @@
 import copy
 import pytest
-from word_embeddings_alignment.SimpleAlignmentRepresentation import SimpleAlignmentRepresentation
+from word_embeddings_alignment.simple_alignment_representation import SimpleAlignmentRepresentation
 
 
 @pytest.fixture(scope="module")

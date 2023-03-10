@@ -2,7 +2,7 @@ import warnings
 from typing import Tuple
 from typing import Dict
 from typing import SupportsFloat, Union
-from word_embeddings_alignment.SimpleAlignmentRepresentation import SimpleAlignmentRepresentation
+from word_embeddings_alignment.simple_alignment_representation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.my_warnings import MultipleMaxValuesInDistanceMatrix
 

@@ -5,10 +5,10 @@ from typing import List
 from typing import Tuple
 from typing import SupportsFloat, Union
 
-from word_embeddings_alignment.SimpleAlignmentRepresentation import SimpleAlignmentRepresentation
+from word_embeddings_alignment.simple_alignment_representation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.my_warnings import MultipleMaxValuesInDistanceMatrix
-from word_embeddings_alignment.regular_water.matrices.EDNA_FULL import EDNAFULL_matrix
+from word_embeddings_alignment.regular_water.matrices.edna_full import EDNAFULL_matrix
 
 Numeric = Union[SupportsFloat, complex]
 UPPER = 1
