@@ -29,8 +29,7 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 		for j, char_b in enumerate(seq_b, 1):
 			# gap_penalty equals gap_extend if there is already a gap in a previous cell, else gap_open
 			if (i + 2 <= len(seq_a)) and (j + 2 <= len(seq_b)):
-				to_subtract = min(max(i, j), 3)
-				slant = distance_matrix[i - to_subtract, j - to_subtract] + points_for_word_embeddings(word_embeddings, seq_a[i-1:i+2], seq_b[j-1:j+2])
+				slant = distance_matrix[i - 1, j - 1] + points_for_word_embeddings(word_embeddings, seq_a[i-1:i+2], seq_b[j-1:j+2])
 			else:
 				slant = 0
 			upper = distance_matrix[i - 1, j] - (
