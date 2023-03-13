@@ -82,3 +82,13 @@ def test_6_affine_gap_penalty():
 	assert a.score == 25
 	assert a.seq1 == 'DDLD-----VVAK'
 	assert a.seq2 == 'DDLDTLLGDVVAK'
+
+
+def test_affine_gap_penalty_gaps_in_second_sequence(ednafull_simplified: Dict[str, int]):
+	with pytest.warns(MultipleEquallyScoredPathsFromMaxTo0, match="Multiple best-scoring alignments are possible"):
+		a = align(
+			'CGCCGTAT', 'CGCAT', ednafull_simplified, 5, 1
+		)
+	assert a.score == 18
+	assert a.seq1 == 'CGCCGTAT'
+	assert a.seq2 == 'CGC---AT'
