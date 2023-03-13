@@ -45,8 +45,19 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 			if maximum == 0:
 				pass
 			elif maximum == slant:
+				# update of +word_length position in matrices
 				traceback_matrix[i + 1, j + 1] |= SLANT
 				distance_matrix[i+2, j+2] = slant
+				# update of current position in matrices
+				curr_max = max(upper, left, distance_matrix[i, j])
+				if curr_max != 0:
+					# first clear current value of traceback_matrix[i, j]
+					traceback_matrix[i - 1, j - 1] = 0
+					# then update it
+					traceback_matrix[i - 1, j - 1] |= SLANT if curr_max == distance_matrix[i, j] else 0
+					traceback_matrix[i - 1, j - 1] |= UPPER if curr_max == upper else 0
+					traceback_matrix[i - 1, j - 1] |= LEFT if curr_max == left else 0
+					distance_matrix[i, j] = curr_max
 			# in the code below: maximum == upper or maximum == left
 			elif traceback_matrix[i - 1, j - 1] == SLANT and distance_matrix[i, j] > maximum:
 				pass
