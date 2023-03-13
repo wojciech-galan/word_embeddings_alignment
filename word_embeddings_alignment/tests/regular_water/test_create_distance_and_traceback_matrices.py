@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 from typing import Dict
-from word_embeddings_alignment.regular_water.my_water import create_distance_and_traceback_matrices
+from word_embeddings_alignment.regular_water.regular_water import create_distance_and_traceback_matrices
 
 
 def test_mathing_sequences__distance_matrix(ednafull_simplified: Dict[str, int]):

@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from word_embeddings_alignment.regular_water.my_water import find_indices_of_max
+from word_embeddings_alignment.regular_water.regular_water import find_indices_of_max
 
 
 @pytest.fixture(scope='function')

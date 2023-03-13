@@ -2,7 +2,7 @@ import pytest
 
 import numpy as np
 
-from word_embeddings_alignment.regular_water.my_water import traceback
+from word_embeddings_alignment.regular_water.regular_water import traceback
 from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 
 

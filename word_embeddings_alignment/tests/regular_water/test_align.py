@@ -3,7 +3,7 @@ import blosum as bl
 
 from typing import Dict
 
-from word_embeddings_alignment.regular_water.my_water import align
+from word_embeddings_alignment.regular_water.regular_water import align
 from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.my_warnings import MultipleMaxValuesInDistanceMatrix
 
