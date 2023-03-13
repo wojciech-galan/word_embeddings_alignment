@@ -9,3 +9,5 @@ if __name__ == "__main__":
 	print(align('ACGTCTGATACGCCGTATAGTCTATCT', 'CTGATTCGCATCGTCTATCT', EDNAFULL_matrix, 5, 1))
 	print(align('CGCAT', 'CGCCGTAT', EDNAFULL_matrix, 5, 1))
 	print(align('CTCTAGCATTAG', 'GTGCACCCA', bl.BLOSUM(62), 10, 1))
+	print(align('DDLDVVAK', 'DDLDTLLGDVVAK', bl.BLOSUM(62), 10, 1))
+	print(align('DDLDVVAK', 'DDLTLLGDVVAK', bl.BLOSUM(62), 10, 1))
