@@ -50,7 +50,7 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 				distance_matrix[i+2, j+2] = slant
 				# update of current position in matrices
 				curr_max = max(upper, left, distance_matrix[i, j])
-				if curr_max != 0:
+				if curr_max:
 					# first clear current value of traceback_matrix[i, j]
 					traceback_matrix[i - 1, j - 1] = 0
 					# then update it
