@@ -1,3 +1,4 @@
+import pdb
 import warnings
 import numpy as np
 from typing import Dict
@@ -58,42 +59,42 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[
 
 def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int], traceback_matrix: np.ndarray,
               seq_a: str, seq_b: str):
-	element = distance_matrix[max_element_indices]
-	previously_used = 0
+	previous_direction = 0
 	curr_element_a, curr_element_b = max_element_indices
-	alignment = SimpleAlignmentRepresentation(element)
-	while element:
+	alignment = SimpleAlignmentRepresentation(distance_matrix[max_element_indices])
+	while distance_matrix[curr_element_a, curr_element_b]:
+		# if curr_element_a == 4 and curr_element_b == 9:
+		# 	print(traceback_matrix[curr_element_a - 1, curr_element_b - 1])
 		direction = traceback_matrix[curr_element_a - 1, curr_element_b - 1]
 		if direction & (SLANT | UPPER | LEFT) in AMBIGUOUS_DIRECTIONS:
 			warnings.warn("Multiple best-scoring alignments are possible", MultipleEquallyScoredPathsFromMaxTo0)
 		# first check, whether we are already extending a gap
-		if (previously_used == LEFT) and (direction & LEFT):
+		if (previous_direction == LEFT) and (direction & LEFT):
 			# gap on the first sequence
 			alignment.add_data(GAP, seq_b[curr_element_b - 1])
 			curr_element_b -= 1
-			previously_used = LEFT
-		elif (previously_used == UPPER) and (direction & UPPER):
+			previous_direction = LEFT
+		elif (previous_direction == UPPER) and (direction & UPPER):
 			# gap on the second sequence
 			alignment.add_data(seq_a[curr_element_a - 1], GAP)
 			curr_element_a -= 1
-			previously_used = UPPER
+			previous_direction = UPPER
 		# if we are not extending a gap:
 		elif direction & SLANT:
 			alignment.add_data(seq_a[curr_element_a - 1], seq_b[curr_element_b - 1])
 			curr_element_a -= 1
 			curr_element_b -= 1
-			previously_used = 0
+			previous_direction = 0
 		elif direction & LEFT:
 			# gap on the first sequence
 			alignment.add_data(GAP, seq_b[curr_element_b - 1])
 			curr_element_b -= 1
-			previously_used = LEFT
+			previous_direction = LEFT
 		elif direction & UPPER:
 			# gap on the second sequence
 			alignment.add_data(seq_a[curr_element_a - 1], GAP)
 			curr_element_a -= 1
-			previously_used = UPPER
-		element = distance_matrix[curr_element_a, curr_element_b]
+			previous_direction = UPPER
 	return alignment
 
 
