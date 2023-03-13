@@ -1,10 +1,11 @@
 import pytest
 import numpy as np
+from typing import Dict
 from word_embeddings_alignment.word_embeddings_water.word_embeddings_water import create_distance_and_traceback_matrices
 
 
 @pytest.fixture()
-def embeddings() -> np.ndarray:
+def embeddings() -> Dict[str, np.ndarray]:
 	return {
 		'ACG': np.array([0, 0]),
 		'CGA': np.array([0, 3]),
@@ -21,7 +22,7 @@ def set_up(mocker):
 	mocked_get_first_key_from_a_dict.return_value = '___'
 
 
-def test_short_aligned_no_identical_nucleotides(embeddings: np.ndarray, mocker):
+def test_short_aligned_no_identical_nucleotides(embeddings: Dict[str, np.ndarray], mocker):
 	set_up(mocker)
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACG',
@@ -44,7 +45,7 @@ def test_short_aligned_no_identical_nucleotides(embeddings: np.ndarray, mocker):
 	np.testing.assert_array_equal(tm, tm_template)
 
 
-def test_short_aligned_4_identical_nucleotides(embeddings: np.ndarray, mocker):
+def test_short_aligned_4_identical_nucleotides(mocker):
 	set_up(mocker)
 	dm, tm = create_distance_and_traceback_matrices(
 		'AAAA',
@@ -69,7 +70,7 @@ def test_short_aligned_4_identical_nucleotides(embeddings: np.ndarray, mocker):
 	np.testing.assert_array_equal(tm, tm_template)
 
 
-def test_short_aligned_4_matching_nucleotides(embeddings: np.ndarray, mocker):
+def test_short_aligned_4_matching_nucleotides(mocker):
 	set_up(mocker)
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGA',
@@ -94,7 +95,7 @@ def test_short_aligned_4_matching_nucleotides(embeddings: np.ndarray, mocker):
 	np.testing.assert_array_equal(tm, tm_template)
 
 
-def test_short_aligned_4_partially_matching_nucleotides_no_mocks(embeddings: np.ndarray):
+def test_short_aligned_4_partially_matching_nucleotides_no_mocks(embeddings: Dict[str, np.ndarray]):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGA',
 		'ACGT',
