@@ -64,3 +64,21 @@ def test_4_affine_gap_penalty():
 	assert a.score == 19
 	assert a.seq1 == 'GCA'
 	assert a.seq2 == 'GCA'
+
+
+def test_5_affine_gap_penalty():
+	a = align(
+		'AQCHWWL', 'AALLQYL', bl.BLOSUM(62), 10, 1
+	)
+	assert a.score == 6
+	assert a.seq1 == 'WL'
+	assert a.seq2 == 'YL'
+
+
+def test_6_affine_gap_penalty():
+	a = align(
+		'DDLDVVAK', 'DDLDTLLGDVVAK', bl.BLOSUM(62), 10, 1
+	)
+	assert a.score == 25
+	assert a.seq1 == 'DDLD-----VVAK'
+	assert a.seq2 == 'DDLDTLLGDVVAK'
