@@ -213,7 +213,6 @@ def test_two_triples_matching_nucleotides_slant_or_gap(
 
 
 def test_two_triples_matching_nucleotides_no_mocks_affine_gap_penalty(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_no_mocks_affine_gap_penalty_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_no_mocks_affine_gap_penalty_traceback_matrix: np.ndarray
 ):
@@ -230,7 +229,6 @@ def test_two_triples_matching_nucleotides_no_mocks_affine_gap_penalty(
 
 
 def test_two_triples_matching_nucleotides_with_one_gap(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_with_one_gap_no_mocks_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_with_one_gap_no_mocks_traceback_matrix: np.ndarray
 ):
@@ -247,7 +245,6 @@ def test_two_triples_matching_nucleotides_with_one_gap(
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_with_one_gap_no_mocks_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs_traceback_matrix: np.ndarray
 ):
@@ -264,7 +261,6 @@ def test_two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs(
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks_traceback_matrix: np.ndarray
 ):
@@ -281,7 +277,6 @@ def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_e
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_traceback_matrix: np.ndarray
 ):
@@ -298,7 +293,6 @@ def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_b
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_affine_gap_score(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_traceback_matrix: np.ndarray
 ):
@@ -315,7 +309,6 @@ def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_b
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_affine_gap_score_swapped(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_no_mocks_affine_gap_score_swapped_traceback_matrix: np.ndarray
 ):
