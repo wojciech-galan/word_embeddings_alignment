@@ -256,3 +256,20 @@ def test_two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginnin
 	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_distance_matrix.T)
 	np.testing.assert_array_equal(tm,
 	                              two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_no_mocks_affine_gap_score_swapped_traceback_matrix)
+
+
+def test_two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap(
+embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_traceback_matrix: np.ndarray
+):
+	dm, tm = create_distance_and_traceback_matrices(
+		'ACGTTACG',
+		'ACGACG',
+		embeddings,
+		10, 5
+	)
+	np.testing.assert_array_equal(dm,
+	                              two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix)
+	np.testing.assert_array_equal(tm,
+	                              two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_traceback_matrix)

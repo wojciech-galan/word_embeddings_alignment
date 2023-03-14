@@ -11,7 +11,9 @@ def embeddings() -> Dict[str, np.ndarray]:
 		'TAC': np.array([0, 2]),
 		'CGA': np.array([0, 3]),
 		'CGT': np.array([0, 4]),
-		'GAC': np.array([0, 5])
+		'GAC': np.array([0, 5]),
+		'GTT': np.array([0, 7]),
+		'TTA': np.array([0, 9])
 	}
 
 
@@ -332,4 +334,33 @@ def two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_no_
 		[0, 0, 5, 1, 1, 3, 3, 1],
 		[0, 0, 4, 2, 1, 3, 3, 4],
 		[0, 0, 1, 0, 4, 2, 2, 4]
+	])
+
+
+@pytest.fixture(scope='module')
+def two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix() -> np.ndarray:
+	return np.array([
+		[0, 0, 0,  0,  0,  0,  0],
+		[0, 0, 0,  0,  0,  0,  0],
+		[0, 0, 0,  0,  0,  0,  0],
+		[0, 0, 0, 45, 35, 30, 45],
+		[0, 0, 0, 35, 25, 20, 35],
+		[0, 0, 0, 30, 20, 15, 30],
+		[0, 0, 0, 25, 15, 10, 36],
+		[0, 0, 0, 20, 15,  5, 40],
+		[0, 0, 0, 45, 35, 30, 75]
+	])
+
+
+@pytest.fixture(scope='module')
+def two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_traceback_matrix() -> np.ndarray:
+	return np.array([
+		[0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0],
+		[0, 0, 4, 2, 2, 4],
+		[0, 0, 1, 3, 3, 1],
+		[0, 0, 1, 3, 3, 1],
+		[0, 0, 1, 3, 3, 4],
+		[0, 0, 1, 4, 3, 4],
+		[0, 0, 4, 2, 2, 4]
 	])
