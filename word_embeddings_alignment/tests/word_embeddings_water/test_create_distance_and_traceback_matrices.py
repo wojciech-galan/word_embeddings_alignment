@@ -4,18 +4,6 @@ from typing import Dict
 from word_embeddings_alignment.word_embeddings_water.word_embeddings_water import create_distance_and_traceback_matrices
 
 
-@pytest.fixture()
-def embeddings() -> Dict[str, np.ndarray]:
-	return {
-		'ACG': np.array([0, 0]),
-		'GTA': np.array([0, 1]),
-		'TAC': np.array([0, 2]),
-		'CGA': np.array([0, 3]),
-		'CGT': np.array([0, 4]),
-		'GAC': np.array([0, 5])
-	}
-
-
 def set_up(mocker):
 	mocked_points_for_word_embeddings = mocker.patch(
 		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
@@ -33,7 +21,10 @@ def test_word_len_not_equal_3(mocker):
 		create_distance_and_traceback_matrices(None, None, None, None, None)
 
 
-def test_short_aligned_no_identical_nucleotides(embeddings: Dict[str, np.ndarray], mocker):
+def test_short_aligned_no_identical_nucleotides(embeddings: Dict[str, np.ndarray],
+                                                short_aligned_no_identical_nucleotides_distance_matrix: np.ndarray,
+                                                short_aligned_no_identical_nucleotides_traceback_matrix: np.ndarray,
+                                                mocker):
 	set_up(mocker)
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACG',
@@ -41,22 +32,13 @@ def test_short_aligned_no_identical_nucleotides(embeddings: Dict[str, np.ndarray
 		None,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0],
-		[0, 0, 0,  0],
-		[0, 0, 0,  0],
-		[0, 0, 0, 45]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0],
-		[0, 0, 0],
-		[0, 0, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, short_aligned_no_identical_nucleotides_distance_matrix)
+	np.testing.assert_array_equal(tm, short_aligned_no_identical_nucleotides_traceback_matrix)
 
 
-def test_short_aligned_4_identical_nucleotides(mocker):
+def test_short_aligned_4_identical_nucleotides(short_aligned_4_identical_nucleotides_distance_matrix: np.ndarray,
+                                               short_aligned_4_identical_nucleotides_traceback_matrix: np.ndarray,
+                                               mocker):
 	set_up(mocker)
 	dm, tm = create_distance_and_traceback_matrices(
 		'AAAA',
@@ -64,24 +46,13 @@ def test_short_aligned_4_identical_nucleotides(mocker):
 		None,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0],
-		[0, 0, 0,  0,  0],
-		[0, 0, 0,  0,  0],
-		[0, 0, 0, 45, 45],
-		[0, 0, 0, 45, 45]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0],
-		[0, 0, 0, 0],
-		[0, 0, 4, 4],
-		[0, 0, 4, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, short_aligned_4_identical_nucleotides_distance_matrix)
+	np.testing.assert_array_equal(tm, short_aligned_4_identical_nucleotides_traceback_matrix)
 
 
-def test_short_aligned_4_matching_nucleotides(mocker):
+def test_short_aligned_4_matching_nucleotides(short_aligned_4_matching_nucleotides_distance_matrix: np.ndarray,
+                                              short_aligned_4_matching_nucleotides_traceback_matrix: np.ndarray,
+                                              mocker):
 	set_up(mocker)
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGA',
@@ -89,76 +60,41 @@ def test_short_aligned_4_matching_nucleotides(mocker):
 		None,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0],
-		[0, 0, 0,  0,  0],
-		[0, 0, 0,  0,  0],
-		[0, 0, 0, 45, 45],
-		[0, 0, 0, 45, 45]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0],
-		[0, 0, 0, 0],
-		[0, 0, 4, 4],
-		[0, 0, 4, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, short_aligned_4_matching_nucleotides_distance_matrix)
+	np.testing.assert_array_equal(tm, short_aligned_4_matching_nucleotides_traceback_matrix)
 
 
-def test_short_aligned_4_partially_matching_nucleotides_no_mocks(embeddings: Dict[str, np.ndarray]):
+def test_short_aligned_4_partially_matching_nucleotides_no_mocks(embeddings: Dict[str, np.ndarray],
+                                                                 short_aligned_4_partially_matching_nucleotides_distance_matrix: np.ndarray,
+                                                                 short_aligned_4_partially_matching_nucleotides_traceback_matrix: np.ndarray):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGA',
 		'ACGT',
 		embeddings,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0],
-		[0, 0, 0,  0,  0],
-		[0, 0, 0,  0,  0],
-		[0, 0, 0, 45, 40],
-		[0, 0, 0, 40, 35]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0],
-		[0, 0, 0, 0],
-		[0, 0, 4, 2],
-		[0, 0, 1, 3]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, short_aligned_4_partially_matching_nucleotides_distance_matrix)
+	np.testing.assert_array_equal(tm, short_aligned_4_partially_matching_nucleotides_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_no_mocks(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_no_mocks(embeddings: Dict[str, np.ndarray],
+                                                   two_triples_matching_nucleotides_no_mocks_distance_matrix: np.ndarray,
+                                                   two_triples_matching_nucleotides_no_mocks_traceback_matrix: np.ndarray):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGACG',
 		'ACGACG',
 		embeddings,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0, 45, 40, 35, 45],
-		[0, 0, 0, 40, 45, 40, 40],
-		[0, 0, 0, 35, 40, 45, 40],
-		[0, 0, 0, 45, 40, 40, 90]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 4, 2, 2, 4],
-		[0, 0, 1, 4, 2, 1],
-		[0, 0, 1, 1, 4, 2],
-		[0, 0, 4, 2, 1, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, two_triples_matching_nucleotides_no_mocks_distance_matrix)
+	np.testing.assert_array_equal(tm, two_triples_matching_nucleotides_no_mocks_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_higher_score_for_embeddings_similarity(mocker):
+def test_two_triples_matching_nucleotides_higher_score_for_embeddings_similarity(
+		two_triples_matching_nucleotides_higher_score_for_embeddings_similarity_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_higher_score_for_embeddings_similarity_traceback_matrix: np.ndarray,
+		mocker
+):
 	def side_effect(*args):
 		if args[1] == args[2]:
 			return 45
@@ -176,29 +112,17 @@ def test_two_triples_matching_nucleotides_higher_score_for_embeddings_similarity
 		None,
 		5, 5
 	)
-
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0, 45, 40, 36, 45],
-		[0, 0, 0, 40, 45, 40, 40],
-		[0, 0, 0, 36, 40, 45, 40],
-		[0, 0, 0, 45, 40, 40, 90]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 4, 2, 4, 4],
-		[0, 0, 1, 4, 2, 1],
-		[0, 0, 4, 1, 4, 2],
-		[0, 0, 4, 2, 1, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm,
+	                              two_triples_matching_nucleotides_higher_score_for_embeddings_similarity_distance_matrix)
+	np.testing.assert_array_equal(tm,
+	                              two_triples_matching_nucleotides_higher_score_for_embeddings_similarity_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_slant_or_gap(mocker):
+def test_two_triples_matching_nucleotides_slant_or_gap(
+		mocker,
+		two_triples_matching_nucleotides_slant_or_gap_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_slant_or_gap_traceback_matrix: np.ndarray
+):
 	def side_effect(*args):
 		if args[1] == args[2]:
 			return 45
@@ -216,235 +140,119 @@ def test_two_triples_matching_nucleotides_slant_or_gap(mocker):
 		None,
 		5, 5
 	)
-
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0, 45, 40, 35, 45],
-		[0, 0, 0, 40, 45, 40, 40],
-		[0, 0, 0, 35, 40, 45, 40],
-		[0, 0, 0, 45, 40, 40, 90]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 4, 2, 6, 4],
-		[0, 0, 1, 4, 2, 1],
-		[0, 0, 5, 1, 4, 2],
-		[0, 0, 4, 2, 1, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, two_triples_matching_nucleotides_slant_or_gap_distance_matrix)
+	np.testing.assert_array_equal(tm, two_triples_matching_nucleotides_slant_or_gap_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_no_mocks_affine_gap_penalty(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_no_mocks_affine_gap_penalty(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_no_mocks_affine_gap_penalty_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_no_mocks_affine_gap_penalty_traceback_matrix: np.ndarray
+):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGACG',
 		'ACGACG',
 		embeddings,
 		10, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 45, 35, 30, 45],
-		[0, 0, 0, 35, 45, 35, 35],
-		[0, 0, 0, 30, 35, 45, 35],
-		[0, 0, 0, 45, 35, 35, 90]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 4, 2, 2, 4],
-		[0, 0, 1, 4, 2, 1],
-		[0, 0, 1, 1, 4, 2],
-		[0, 0, 4, 2, 1, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, two_triples_matching_nucleotides_no_mocks_affine_gap_penalty_distance_matrix)
+	np.testing.assert_array_equal(tm, two_triples_matching_nucleotides_no_mocks_affine_gap_penalty_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_with_one_gap_no_mocks(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_with_one_gap_no_mocks(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_one_gap_no_mocks_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_one_gap_no_mocks_traceback_matrix: np.ndarray
+):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGACG',
 		'ACGTACG',
 		embeddings,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0, 45, 40, 35, 30, 45],
-		[0, 0, 0, 40, 35, 30, 25, 40],
-		[0, 0, 0, 35, 30, 25, 20, 35],
-		[0, 0, 0, 45, 40, 35, 50, 85]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 4, 2, 2, 2, 4],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 4, 2, 2, 4, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, two_triples_matching_nucleotides_with_one_gap_no_mocks_distance_matrix)
+	np.testing.assert_array_equal(tm, two_triples_matching_nucleotides_with_one_gap_no_mocks_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_one_gap_no_mocks_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs_traceback_matrix: np.ndarray
+):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGTACG',
 		'ACGACG',
 		embeddings,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0],
-		[0, 0, 0, 45, 40, 35, 45],
-		[0, 0, 0, 40, 35, 30, 40],
-		[0, 0, 0, 35, 30, 25, 35],
-		[0, 0, 0, 30, 25, 20, 50],
-		[0, 0, 0, 45, 40, 35, 85]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0],
-		[0, 0, 4, 2, 2, 4],
-		[0, 0, 1, 3, 3, 1],
-		[0, 0, 1, 3, 3, 1],
-		[0, 0, 1, 3, 3, 4],
-		[0, 0, 4, 2, 2, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm, two_triples_matching_nucleotides_with_one_gap_no_mocks_distance_matrix.T)
+	np.testing.assert_array_equal(tm,
+	                              two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks_traceback_matrix: np.ndarray
+):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGACGAC',
 		'ACGTACG',
 		embeddings,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0, 45, 40, 35, 30, 45],
-		[0, 0, 0, 40, 35, 30, 25, 40],
-		[0, 0, 0, 35, 30, 25, 20, 35],
-		[0, 0, 0, 45, 40, 35, 50, 85],
-		[0, 0, 0, 40, 35, 30, 55, 80],
-		[0, 0, 0, 35, 30, 25, 50, 75]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 4, 2, 2, 2, 4],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 4, 2, 2, 4, 4],
-		[0, 0, 1, 3, 3, 4, 1],
-		[0, 0, 1, 3, 3, 1, 1]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm,
+	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks_distance_matrix)
+	np.testing.assert_array_equal(tm,
+	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_traceback_matrix: np.ndarray
+):
 	dm, tm = create_distance_and_traceback_matrices(
 		'CGACGACG',
 		'ACGTACG',
 		embeddings,
 		5, 5
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0, 15, 10, 15, 10],
-		[0, 0, 0,  0, 15, 10, 10,  5],
-		[0, 0, 0, 45, 40, 35, 30, 45],
-		[0, 0, 0, 40, 35, 30, 25, 40],
-		[0, 0, 0, 35, 30, 25, 20, 35],
-		[0, 0, 0, 45, 40, 35, 50, 85]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 4, 2, 4, 2],
-		[0, 0, 0, 4, 2, 1, 3],
-		[0, 0, 4, 2, 2, 2, 4],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 4, 2, 2, 4, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm,
+	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_distance_matrix)
+	np.testing.assert_array_equal(tm,
+	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_traceback_matrix: np.ndarray
+):
 	dm, tm = create_distance_and_traceback_matrices(
 		'CGACGACG',
 		'ACGTACG',
 		embeddings,
 		10, 1
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0, 15,  5, 15,  5],
-		[0, 0, 0,  0, 15,  5,  5,  0],
-		[0, 0, 0, 45, 35, 34, 33, 45],
-		[0, 0, 0, 35, 25, 24, 23, 35],
-		[0, 0, 0, 34, 24, 23, 22, 34],
-		[0, 0, 0, 45, 35, 34, 50, 80]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 4, 6, 4, 2],
-		[0, 0, 0, 4, 2, 1, 0],
-		[0, 0, 4, 2, 2, 2, 4],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 1, 3, 3, 3, 1],
-		[0, 0, 4, 2, 2, 4, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm,
+	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_distance_matrix)
+	np.testing.assert_array_equal(tm,
+	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_traceback_matrix)
 
 
-def test_two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_no_mocks_affine_gap_score_swapped(embeddings: Dict[str, np.ndarray]):
+def test_two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_no_mocks_affine_gap_score_swapped(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_no_mocks_affine_gap_score_swapped_traceback_matrix: np.ndarray
+):
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGTACG',
 		'CGACGACG',
 		embeddings,
 		10, 1
 	)
-	dm_template = np.array([
-		[0, 0, 0,  0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0,  0,  0,  0,  0],
-		[0, 0, 0,  0,  0, 45, 35, 34, 45],
-		[0, 0, 0, 15, 15, 35, 25, 24, 35],
-		[0, 0, 0,  5,  5, 34, 24, 23, 34],
-		[0, 0, 0, 15,  5, 33, 23, 22, 50],
-		[0, 0, 0,  5,  0, 45, 35, 34, 80]
-	])
-	np.testing.assert_array_equal(dm, dm_template)
-	tm_template = np.array([
-		[0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 4, 2, 2, 4],
-		[0, 0, 4, 4, 1, 3, 3, 1],
-		[0, 0, 5, 1, 1, 3, 3, 1],
-		[0, 0, 4, 2, 1, 3, 3, 4],
-		[0, 0, 1, 0, 4, 2, 2, 4]
-	])
-	np.testing.assert_array_equal(tm, tm_template)
+	np.testing.assert_array_equal(dm,
+	                              two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_no_mocks_affine_gap_score_distance_matrix.T)
+	np.testing.assert_array_equal(tm,
+	                              two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginning_no_mocks_affine_gap_score_swapped_traceback_matrix)
