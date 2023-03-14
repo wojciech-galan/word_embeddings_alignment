@@ -323,3 +323,19 @@ def test_two_triples_matching_nucleotides_with_one_gap_add_chars_at_the_beginnin
 	assert a.seq2 == 'ACG-ACG'
 	assert a.score == 80
 
+
+def test_two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap(
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_traceback_matrix: np.ndarray
+):
+	a = traceback(
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix,
+		(8, 6),
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_traceback_matrix,
+		'ACGTTACG',
+		'ACGACG'
+	)
+	assert a.seq1 == 'ACGTTACG'
+	assert a.seq2 == 'ACG--ACG'
+	assert a.score == 75
+
