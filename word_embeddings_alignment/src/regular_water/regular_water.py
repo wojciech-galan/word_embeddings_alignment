@@ -17,7 +17,7 @@ AMBIGUOUS_DIRECTIONS = {UPPER | LEFT, UPPER | SLANT, LEFT | SLANT}
 GAP = '-'
 
 
-def align(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]], gap_open: Numeric,
+def align(seq_a: str, seq_b: str, matrix: Dict[str, Numeric], gap_open: Numeric,
           gap_extend: Numeric) -> SimpleAlignmentRepresentation:
 	distance_matrix, traceback_matrix = create_distance_and_traceback_matrices(seq_a, seq_b, matrix, gap_open,
 	                                                                           gap_extend)
@@ -30,7 +30,7 @@ def align(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]], gap_ope
 	return traceback(distance_matrix, max_indices_list[0], traceback_matrix, seq_a, seq_b)
 
 
-def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Dict[str, Numeric]],
+def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Numeric],
                                            gap_open: Numeric, gap_extend: Numeric) -> Tuple[np.ndarray, np.ndarray]:
 	# create initial matrices
 	distance_matrix = np.full((len(seq_a) + 1, len(seq_b) + 1), np.NaN)
