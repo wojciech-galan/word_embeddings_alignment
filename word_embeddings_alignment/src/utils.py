@@ -2,6 +2,7 @@ import warnings
 from typing import Dict
 from typing import List
 from typing import Tuple
+from typing import Generator
 
 import numpy as np
 
@@ -18,7 +19,8 @@ ALIGNMENT_TYPES = {
 
 
 def align(seq_a: str, seq_b: str, matrix: Dict[str, Numeric], gap_open: Numeric,
-          gap_extend: Numeric, alignment_type: str) -> SimpleAlignmentRepresentation:
+          gap_extend: Numeric, alignment_type: str,
+          return_multiple_alignments: bool = False) -> Generator[SimpleAlignmentRepresentation, None, None]:
 	create_distance_and_traceback_matrices = ALIGNMENT_TYPES[alignment_type].create_distance_and_traceback_matrices
 	traceback = ALIGNMENT_TYPES[alignment_type].traceback
 	distance_matrix, traceback_matrix = create_distance_and_traceback_matrices(seq_a, seq_b, matrix, gap_open,
@@ -26,10 +28,14 @@ def align(seq_a: str, seq_b: str, matrix: Dict[str, Numeric], gap_open: Numeric,
 	max_indices_list = find_indices_of_max(distance_matrix)
 	if distance_matrix[max_indices_list[0]] == 0:
 		alignment = SimpleAlignmentRepresentation(distance_matrix[max_indices_list[0]])
-		return alignment
-	elif len(max_indices_list) > 1:
-		warnings.warn("Multiple best-scoring alignments are possible", MultipleMaxValuesInDistanceMatrix)
-	return traceback(distance_matrix, max_indices_list[0], traceback_matrix, seq_a, seq_b)
+		yield alignment
+	elif return_multiple_alignments:
+		for max_indices in max_indices_list:
+			yield traceback(distance_matrix, max_indices, traceback_matrix, seq_a, seq_b)
+	else:
+		if len(max_indices_list) > 1:
+			warnings.warn("Multiple best-scoring alignments are possible", MultipleMaxValuesInDistanceMatrix)
+		yield traceback(distance_matrix, max_indices_list[0], traceback_matrix, seq_a, seq_b)
 
 
 def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
