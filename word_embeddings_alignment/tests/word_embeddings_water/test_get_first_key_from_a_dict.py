@@ -1,4 +1,4 @@
-from word_embeddings_alignment.word_embeddings_water.word_embeddings_water import get_first_key_from_a_dict
+from word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water import get_first_key_from_a_dict
 
 
 def test():

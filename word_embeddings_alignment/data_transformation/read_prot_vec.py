@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import constants
+from src import constants
 import pickle
 from typing import Dict
 

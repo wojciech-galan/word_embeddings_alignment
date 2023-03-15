@@ -1,6 +1,5 @@
 import numpy as np
-from typing import Dict
-from word_embeddings_alignment.word_embeddings_water.word_embeddings_water import traceback
+from word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water import traceback
 
 
 def test_short_aligned_no_identical_nucleotides(

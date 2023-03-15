@@ -3,9 +3,9 @@ import blosum as bl
 
 from typing import Dict
 
-from word_embeddings_alignment.regular_water.regular_water import align
-from word_embeddings_alignment.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
-from word_embeddings_alignment.my_warnings import MultipleMaxValuesInDistanceMatrix
+from word_embeddings_alignment.src.regular_water.regular_water import align
+from word_embeddings_alignment.src.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
+from word_embeddings_alignment.src.my_warnings import MultipleMaxValuesInDistanceMatrix
 
 
 def test_not_similar(ednafull_simplified: Dict[str, int]):

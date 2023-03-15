@@ -1,5 +1,5 @@
 import numpy as np
-from word_embeddings_alignment.word_embeddings_water.word_embeddings_water import euclidean_distance
+from word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water import euclidean_distance
 
 
 def test_1a():

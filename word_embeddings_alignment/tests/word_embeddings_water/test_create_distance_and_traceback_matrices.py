@@ -1,21 +1,21 @@
 import pytest
 import numpy as np
 from typing import Dict
-from word_embeddings_alignment.word_embeddings_water.word_embeddings_water import create_distance_and_traceback_matrices
+from word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water import create_distance_and_traceback_matrices
 
 
 def set_up(mocker):
 	mocked_points_for_word_embeddings = mocker.patch(
-		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
 	mocked_points_for_word_embeddings.return_value = 45
 	mocked_get_first_key_from_a_dict = mocker.patch(
-		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
 	mocked_get_first_key_from_a_dict.return_value = '___'
 
 
 def test_word_len_not_equal_3(mocker):
 	mocked_get_first_key_from_a_dict = mocker.patch(
-		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
 	mocked_get_first_key_from_a_dict.return_value = '____'
 	with pytest.raises(NotImplementedError):
 		create_distance_and_traceback_matrices(None, None, None, None, None)
@@ -101,10 +101,10 @@ def test_two_triples_matching_nucleotides_higher_score_for_embeddings_similarity
 		return 36
 
 	mocked_points_for_word_embeddings = mocker.patch(
-		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
 	mocked_points_for_word_embeddings.side_effect = side_effect
 	mocked_get_first_key_from_a_dict = mocker.patch(
-		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
 	mocked_get_first_key_from_a_dict.return_value = '___'
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGACG',
@@ -129,10 +129,10 @@ def test_two_triples_matching_nucleotides_slant_or_gap(
 		return 35
 
 	mocked_points_for_word_embeddings = mocker.patch(
-		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
 	mocked_points_for_word_embeddings.side_effect = side_effect
 	mocked_get_first_key_from_a_dict = mocker.patch(
-		'word_embeddings_alignment.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
 	mocked_get_first_key_from_a_dict.return_value = '___'
 	dm, tm = create_distance_and_traceback_matrices(
 		'ACGACG',

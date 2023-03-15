@@ -1,6 +1,6 @@
 import blosum as bl
-from word_embeddings_alignment.regular_water.regular_water import align
-from word_embeddings_alignment.regular_water.matrices.edna_full import EDNAFULL_matrix
+from src.regular_water import align
+from src.regular_water.matrices.edna_full import EDNAFULL_matrix
 
 if __name__ == "__main__":
 	pass
