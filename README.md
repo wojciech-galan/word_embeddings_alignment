@@ -10,3 +10,5 @@ Data from SCOP scop_fa_represeq_lib_latest.fa.txt  - Feb 13 2023
 
 Maybe look at https://github.com/LewisLabUCSD/Ligand-Receptor-Pairs ?
 
+Attention - it sometimes shortens aligned sequences (for example 'ACGA', 'ACGA' -> aligns only 'ACG' and 'ACG')
+
