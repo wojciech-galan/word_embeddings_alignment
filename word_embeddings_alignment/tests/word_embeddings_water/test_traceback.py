@@ -340,7 +340,6 @@ def test_two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap(
 
 
 def test_two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_swapped(
-		embeddings: Dict[str, np.ndarray],
 		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix: np.ndarray,
 		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_swapped_traceback_matrix: np.ndarray
 ):
