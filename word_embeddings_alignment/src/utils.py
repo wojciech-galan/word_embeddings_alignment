@@ -13,8 +13,8 @@ from word_embeddings_alignment.src.types import Numeric
 from word_embeddings_alignment.src.simple_alignment_representation import SimpleAlignmentRepresentation
 
 ALIGNMENT_TYPES = {
-	'word_embeddings_water': word_embeddings_water,
-	'regular_water': regular_water
+	'word_embeddings': word_embeddings_water,
+	'classic': regular_water
 }
 
 
