@@ -23,7 +23,7 @@ class SimpleAlignmentRepresentation(object):
 		self._seq2.append(char_b)
 
 	def __str__(self):
-		return '\n'.join([self.seq1, self.seq2])
+		return f"{self.seq1}\n{self.seq2}\n{self.score}"
 
 	def __eq__(self, other):
 		if isinstance(other, SimpleAlignmentRepresentation):
