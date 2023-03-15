@@ -46,3 +46,8 @@ def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
 			if array[i, j] == maximum:
 				indices.append((i, j))
 	return indices
+
+
+def read_raw_seq(f_path: str) -> str:
+	with open(f_path) as f:
+		return ''.join(f.readlines())
