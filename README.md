@@ -1,14 +1,20 @@
-## Data acquisition
+## Align biological sequences with word embeddings representation
 
-Initial data were obtained from CellTalkDB github: https://github.com/ZJUFanLab/CellTalkDB/tree/master/database
- on Feb 11 2023 (human_rl_pair.csv and mouse_lr_pair.csv)
+### How to
 
-Data from http://proteininformatics.org/mkumar/mipepbase/search.html (ticked every possible `Host or model` and 
-`pathogen group` fields) in 9540.txt Feb 13 2023
+#### Installation
+```commandline
+pip install git+https://github.com/wojciech-galan/word_embeddings_alignment
+```
 
-Data from SCOP scop_fa_represeq_lib_latest.fa.txt  - Feb 13 2023
+#### Help
+```commandline
+word_embeddings_alignment -h
+```
 
-Maybe look at https://github.com/LewisLabUCSD/Ligand-Receptor-Pairs ?
-
-Attention - it sometimes shortens aligned sequences (for example 'ACGA', 'ACGA' -> aligns only 'ACG' and 'ACG')
+#### Example use
+(now only raw-formatted sequences are accepted)
+```commandline
+word_embeddings_alignment path/to/sequence/a path/to/sequence/b 10 1 protein --multiple
+```
 
