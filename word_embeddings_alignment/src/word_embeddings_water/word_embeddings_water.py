@@ -1,7 +1,6 @@
 import warnings
 from typing import Dict
 from typing import Tuple
-from typing import Union
 from word_embeddings_alignment.src.simple_alignment_representation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.src.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.src.types import Numeric
@@ -38,10 +37,6 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 			left = distance_matrix[i, j - 1] - (
 				gap_extend if (i > 1 and j > 2 and traceback_matrix[i - 1, j - 2] & LEFT) else gap_open)
 			maximum = max(slant, upper, left, 0)
-			print(i, j, slant, upper, left)
-			# import pdb
-			# if i == 4 and j == 4:
-			# 	pdb.set_trace()
 			if maximum == 0:
 				pass
 			elif maximum == slant:
@@ -74,8 +69,6 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 				# should never happen
 				pdb.set_trace()
 
-			print(distance_matrix)
-			print(traceback_matrix)
 	return distance_matrix, traceback_matrix
 
 
@@ -128,28 +121,3 @@ def euclidean_distance(vector1: np.ndarray, vector2: np.ndarray):
 
 def points_for_word_embeddings(word_embeddings: Dict[str, np.ndarray], seq1: str, seq2: str):
 	return 60/(1 + euclidean_distance(word_embeddings[seq1],  word_embeddings[seq2])) - 15
-
-
-if __name__ == '__main__':
-	from word_embeddings_alignment.data_transformation import read_prot_vec
-	# print(create_distance_and_traceback_matrices('ACG', 'ACG', {'ACG':np.array([0, 1])}, 5, 5))
-	# print(points_for_word_embeddings(read_prot_vec.read(), 'CGA', 'ACG'))
-	create_distance_and_traceback_matrices(
-		'ACGA',
-		'ACGT',
-		read_prot_vec.read(),
-		5, 5
-	)
-	t = traceback(dm, (8, 6), tm, 'ACGTTACG', 'ACGACG')
-	print(dm)
-	print(tm)
-	print(t)
-	# dm, tm = create_distance_and_traceback_matrices(
-	# 	'DDLDVVAK',
-	# 	'DDLDTLLGDVVAK',
-	# 	read_prot_vec.read(),
-	# 	10, 1
-	# )
-	# print(dm)
-	# print(tm)
-
