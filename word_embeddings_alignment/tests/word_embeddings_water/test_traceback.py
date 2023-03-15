@@ -5,8 +5,8 @@ from word_embeddings_alignment.word_embeddings_water.word_embeddings_water impor
 
 
 def test_short_aligned_no_identical_nucleotides(
-short_aligned_no_identical_nucleotides_distance_matrix:np.ndarray,
-short_aligned_no_identical_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_no_identical_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_no_identical_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_no_identical_nucleotides_distance_matrix,
@@ -21,8 +21,8 @@ short_aligned_no_identical_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_identical_nucleotides_indices_4_4(
-short_aligned_4_identical_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_identical_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_identical_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_identical_nucleotides_distance_matrix,
@@ -37,8 +37,8 @@ short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_identical_nucleotides_indices_4_3(
-short_aligned_4_identical_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_identical_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_identical_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_identical_nucleotides_distance_matrix,
@@ -53,8 +53,8 @@ short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_identical_nucleotides_indices_3_4(
-short_aligned_4_identical_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_identical_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_identical_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_identical_nucleotides_distance_matrix,
@@ -69,8 +69,8 @@ short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_identical_nucleotides_indices_3_3(
-short_aligned_4_identical_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_identical_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_identical_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_identical_nucleotides_distance_matrix,
@@ -85,8 +85,8 @@ short_aligned_4_identical_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_matching_nucleotides_indices_4_4(
-short_aligned_4_matching_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_matching_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_matching_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_matching_nucleotides_distance_matrix,
@@ -101,8 +101,8 @@ short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_matching_nucleotides_indices_4_3(
-short_aligned_4_matching_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_matching_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_matching_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_matching_nucleotides_distance_matrix,
@@ -117,8 +117,8 @@ short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_matching_nucleotides_indices_3_4(
-short_aligned_4_matching_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_matching_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_matching_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_matching_nucleotides_distance_matrix,
@@ -133,8 +133,8 @@ short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_matching_nucleotides_indices_3_3(
-short_aligned_4_matching_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_matching_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_matching_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_matching_nucleotides_distance_matrix,
@@ -149,8 +149,8 @@ short_aligned_4_matching_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_short_aligned_4_partially_matching_nucleotides(
-short_aligned_4_partially_matching_nucleotides_distance_matrix:np.ndarray,
-short_aligned_4_partially_matching_nucleotides_traceback_matrix:np.ndarray
+		short_aligned_4_partially_matching_nucleotides_distance_matrix: np.ndarray,
+		short_aligned_4_partially_matching_nucleotides_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		short_aligned_4_partially_matching_nucleotides_distance_matrix,
@@ -165,8 +165,8 @@ short_aligned_4_partially_matching_nucleotides_traceback_matrix:np.ndarray
 
 
 def test_two_triples_matching_nucleotides(
-two_triples_matching_nucleotides_no_mocks_distance_matrix:np.ndarray,
-two_triples_matching_nucleotides_no_mocks_traceback_matrix:np.ndarray
+		two_triples_matching_nucleotides_no_mocks_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_no_mocks_traceback_matrix: np.ndarray
 ):
 	a = traceback(
 		two_triples_matching_nucleotides_no_mocks_distance_matrix,
@@ -339,3 +339,19 @@ def test_two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap(
 	assert a.seq2 == 'ACG--ACG'
 	assert a.score == 75
 
+
+def test_two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_swapped(
+		embeddings: Dict[str, np.ndarray],
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix: np.ndarray,
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_swapped_traceback_matrix: np.ndarray
+):
+	a = traceback(
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_distance_matrix.T,
+		(6, 8),
+		two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_swapped_traceback_matrix,
+		'ACGACG',
+		'ACGTTACG'
+	)
+	assert a.seq1 == 'ACG--ACG'
+	assert a.seq2 == 'ACGTTACG'
+	assert a.score == 75

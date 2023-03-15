@@ -364,3 +364,15 @@ def two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_traceba
 		[0, 0, 1, 4, 3, 4],
 		[0, 0, 4, 2, 2, 4]
 	])
+
+
+@pytest.fixture(scope='module')
+def two_triples_matching_nucleotides_with_longer_gap_no_mocks_affine_gap_swapped_traceback_matrix() -> np.ndarray:
+	return np.array([
+		[0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 4, 2, 2, 2, 2, 4],
+		[0, 0, 1, 3, 3, 3, 4, 1],
+		[0, 0, 1, 3, 3, 3, 3, 1],
+		[0, 0, 4, 2, 2, 4, 4, 4]
+	])
