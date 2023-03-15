@@ -1,0 +1,3 @@
+include LICENSE.md
+include conf.json
+recursive-include data/word_embeddings/prot *
