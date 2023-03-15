@@ -1,10 +1,10 @@
 import warnings
 import numpy as np
 from typing import Dict
-from typing import List
 from typing import Tuple
 from typing import SupportsFloat, Union
 
+from word_embeddings_alignment.src.utils import find_indices_of_max
 from word_embeddings_alignment.src.simple_alignment_representation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.src.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.src.my_warnings import MultipleMaxValuesInDistanceMatrix
@@ -97,11 +97,3 @@ def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int],
 	return alignment
 
 
-def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
-	maximum = array.max()
-	indices = []
-	for i in range(array.shape[0]):
-		for j in range(array.shape[1]):
-			if array[i, j] == maximum:
-				indices.append((i, j))
-	return indices
