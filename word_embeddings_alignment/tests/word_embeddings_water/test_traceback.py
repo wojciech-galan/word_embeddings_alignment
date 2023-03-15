@@ -1,4 +1,3 @@
-import pytest
 import numpy as np
 from typing import Dict
 from word_embeddings_alignment.word_embeddings_water.word_embeddings_water import traceback
