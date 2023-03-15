@@ -2,32 +2,16 @@ import warnings
 import numpy as np
 from typing import Dict
 from typing import Tuple
-from typing import SupportsFloat, Union
 
-from word_embeddings_alignment.src.utils import find_indices_of_max
 from word_embeddings_alignment.src.simple_alignment_representation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.src.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
-from word_embeddings_alignment.src.my_warnings import MultipleMaxValuesInDistanceMatrix
+from word_embeddings_alignment.src.types import Numeric
 
-Numeric = Union[SupportsFloat, complex]
 UPPER = 1
 LEFT = 2
 SLANT = 4
 AMBIGUOUS_DIRECTIONS = {UPPER | LEFT, UPPER | SLANT, LEFT | SLANT}
 GAP = '-'
-
-
-def align(seq_a: str, seq_b: str, matrix: Dict[str, Numeric], gap_open: Numeric,
-          gap_extend: Numeric) -> SimpleAlignmentRepresentation:
-	distance_matrix, traceback_matrix = create_distance_and_traceback_matrices(seq_a, seq_b, matrix, gap_open,
-	                                                                           gap_extend)
-	max_indices_list = find_indices_of_max(distance_matrix)
-	if distance_matrix[max_indices_list[0]] == 0:
-		alignment = SimpleAlignmentRepresentation(distance_matrix[max_indices_list[0]])
-		return alignment
-	elif len(max_indices_list) > 1:
-		warnings.warn("Multiple best-scoring alignments are possible", MultipleMaxValuesInDistanceMatrix)
-	return traceback(distance_matrix, max_indices_list[0], traceback_matrix, seq_a, seq_b)
 
 
 def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Numeric],

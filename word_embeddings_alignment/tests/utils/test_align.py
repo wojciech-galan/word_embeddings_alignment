@@ -1,16 +1,17 @@
 import pytest
 import blosum as bl
+import numpy as np
 
 from typing import Dict
 
-from word_embeddings_alignment.src.regular_water.regular_water import align
+from word_embeddings_alignment.src.utils import align
 from word_embeddings_alignment.src.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
 from word_embeddings_alignment.src.my_warnings import MultipleMaxValuesInDistanceMatrix
 
 
 def test_not_similar(ednafull_simplified: Dict[str, int]):
 	a = align(
-		'AC', 'GT', ednafull_simplified, 5, 5
+		'AC', 'GT', ednafull_simplified, 5, 5, 'regular_water'
 	)
 	assert a.score == 0
 	assert a.seq1 == ''
@@ -19,7 +20,7 @@ def test_not_similar(ednafull_simplified: Dict[str, int]):
 
 def test_the_same(ednafull_simplified: Dict[str, int]):
 	a = align(
-		'ACG', 'ACG', ednafull_simplified, 5, 5
+		'ACG', 'ACG', ednafull_simplified, 5, 5, 'regular_water'
 	)
 	assert a.score == 15
 	assert a.seq1 == 'ACG'
@@ -29,7 +30,7 @@ def test_the_same(ednafull_simplified: Dict[str, int]):
 def test_affine_gap_penalty(ednafull_simplified: Dict[str, int]):
 	with pytest.warns(MultipleEquallyScoredPathsFromMaxTo0):
 		a = align(
-			'CGCAT', 'CGCCGTAT', ednafull_simplified, 5, 1
+			'CGCAT', 'CGCCGTAT', ednafull_simplified, 5, 1, 'regular_water'
 		)
 	assert a.score == 18
 	assert a.seq1 == 'CGC---AT'
@@ -39,7 +40,7 @@ def test_affine_gap_penalty(ednafull_simplified: Dict[str, int]):
 def test_2_affine_gap_penalty(ednafull_simplified: Dict[str, int]):
 	with pytest.warns(MultipleEquallyScoredPathsFromMaxTo0):
 		a = align(
-			'ATGGCCTC', 'ACGGCTC', ednafull_simplified, 5, 1
+			'ATGGCCTC', 'ACGGCTC', ednafull_simplified, 5, 1, 'regular_water'
 		)
 	assert a.score == 21
 	assert a.seq1 == 'ATGGCCTC'
@@ -49,7 +50,7 @@ def test_2_affine_gap_penalty(ednafull_simplified: Dict[str, int]):
 def test_3_affine_gap_penalty(ednafull_simplified: Dict[str, int]):
 	with pytest.warns(MultipleMaxValuesInDistanceMatrix):
 		a = align(
-			'ATGGCCTC', 'ACGGCTC', ednafull_simplified, 10, 1
+			'ATGGCCTC', 'ACGGCTC', ednafull_simplified, 10, 1, 'regular_water'
 		)
 	assert a.score == 16
 	assert a.seq1 == 'ATGGC'
@@ -59,7 +60,7 @@ def test_3_affine_gap_penalty(ednafull_simplified: Dict[str, int]):
 def test_4_affine_gap_penalty():
 	with pytest.warns(MultipleMaxValuesInDistanceMatrix):
 		a = align(
-			'CTCTAGCATTAG', 'GTGCACCCA', bl.BLOSUM(62), 10, 1
+			'CTCTAGCATTAG', 'GTGCACCCA', bl.BLOSUM(62), 10, 1, 'regular_water'
 		)
 	assert a.score == 19
 	assert a.seq1 == 'GCA'
@@ -68,7 +69,7 @@ def test_4_affine_gap_penalty():
 
 def test_5_affine_gap_penalty():
 	a = align(
-		'AQCHWWL', 'AALLQYL', bl.BLOSUM(62), 10, 1
+		'AQCHWWL', 'AALLQYL', bl.BLOSUM(62), 10, 1, 'regular_water'
 	)
 	assert a.score == 6
 	assert a.seq1 == 'WL'
@@ -77,7 +78,7 @@ def test_5_affine_gap_penalty():
 
 def test_6_affine_gap_penalty():
 	a = align(
-		'DDLDVVAK', 'DDLDTLLGDVVAK', bl.BLOSUM(62), 10, 1
+		'DDLDVVAK', 'DDLDTLLGDVVAK', bl.BLOSUM(62), 10, 1, 'regular_water'
 	)
 	assert a.score == 25
 	assert a.seq1 == 'DDLD-----VVAK'
@@ -87,8 +88,17 @@ def test_6_affine_gap_penalty():
 def test_affine_gap_penalty_gaps_in_second_sequence(ednafull_simplified: Dict[str, int]):
 	with pytest.warns(MultipleEquallyScoredPathsFromMaxTo0, match="Multiple best-scoring alignments are possible"):
 		a = align(
-			'CGCCGTAT', 'CGCAT', ednafull_simplified, 5, 1
+			'CGCCGTAT', 'CGCAT', ednafull_simplified, 5, 1, 'regular_water'
 		)
 	assert a.score == 18
 	assert a.seq1 == 'CGCCGTAT'
 	assert a.seq2 == 'CGC---AT'
+
+
+def test_short_aligned_no_identical_nucleotides(embeddings: Dict[str, np.ndarray]):
+	a = align(
+		'ACG', 'ACG', embeddings, 5, 5, 'word_embeddings_water'
+	)
+	assert a.seq1 == 'ACG'
+	assert a.seq2 == 'ACG'
+	assert a.score == 45

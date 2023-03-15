@@ -1,37 +1,5 @@
 import pytest
-from typing import Dict
 import numpy as np
-
-# EDNAFULL_SIMPLIFIED
-#     A   T   G   C
-# A   5  -4  -4  -4
-# T  -4   5  -4  -4
-# G  -4  -4   5  -4
-# C  -4  -4  -4   5
-
-
-EDNAFULL_SIMPLIFIED = {'AA': 5,
-                       'AT': -4,
-                       'AG': -4,
-                       'AC': -4,
-                       'TA': -4,
-                       'TT': 5,
-                       'TG': -4,
-                       'TC': -4,
-                       'GA': -4,
-                       'GT': -4,
-                       'GG': 5,
-                       'GC': -4,
-                       'CA': -4,
-                       'CT': -4,
-                       'CG': -4,
-                       'CC': 5,
-                       }
-
-
-@pytest.fixture(scope="module")
-def ednafull_simplified() -> Dict[str, Dict[str, int]]:
-	return EDNAFULL_SIMPLIFIED
 
 
 @pytest.fixture(scope="module")

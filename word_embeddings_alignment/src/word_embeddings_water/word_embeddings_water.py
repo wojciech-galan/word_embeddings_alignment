@@ -1,13 +1,14 @@
 import warnings
-from typing import Tuple
 from typing import Dict
-from typing import SupportsFloat, Union
+from typing import Tuple
+from typing import Union
 from word_embeddings_alignment.src.simple_alignment_representation import SimpleAlignmentRepresentation
 from word_embeddings_alignment.src.my_warnings import MultipleEquallyScoredPathsFromMaxTo0
+from word_embeddings_alignment.src.types import Numeric
+
 
 import numpy as np
 
-Numeric = Union[SupportsFloat, complex]
 UPPER = 1
 LEFT = 2
 SLANT = 4
@@ -139,3 +140,16 @@ if __name__ == '__main__':
 		read_prot_vec.read(),
 		5, 5
 	)
+	t = traceback(dm, (8, 6), tm, 'ACGTTACG', 'ACGACG')
+	print(dm)
+	print(tm)
+	print(t)
+	# dm, tm = create_distance_and_traceback_matrices(
+	# 	'DDLDVVAK',
+	# 	'DDLDTLLGDVVAK',
+	# 	read_prot_vec.read(),
+	# 	10, 1
+	# )
+	# print(dm)
+	# print(tm)
+

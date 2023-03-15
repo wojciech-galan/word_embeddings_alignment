@@ -1,20 +1,5 @@
 import pytest
-from typing import Dict
 import numpy as np
-
-
-@pytest.fixture(scope="module")
-def embeddings() -> Dict[str, np.ndarray]:
-	return {
-		'ACG': np.array([0, 0]),
-		'GTA': np.array([0, 1]),
-		'TAC': np.array([0, 2]),
-		'CGA': np.array([0, 3]),
-		'CGT': np.array([0, 4]),
-		'GAC': np.array([0, 5]),
-		'GTT': np.array([0, 7]),
-		'TTA': np.array([0, 9])
-	}
 
 
 @pytest.fixture(scope='module')
