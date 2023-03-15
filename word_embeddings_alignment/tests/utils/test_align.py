@@ -9,6 +9,15 @@ from word_embeddings_alignment.src.my_warnings import MultipleEquallyScoredPaths
 from word_embeddings_alignment.src.my_warnings import MultipleMaxValuesInDistanceMatrix
 
 
+def set_up(mocker):
+	mocked_points_for_word_embeddings = mocker.patch(
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.points_for_word_embeddings')
+	mocked_points_for_word_embeddings.return_value = 45
+	mocked_get_first_key_from_a_dict = mocker.patch(
+		'word_embeddings_alignment.src.word_embeddings_water.word_embeddings_water.get_first_key_from_a_dict')
+	mocked_get_first_key_from_a_dict.return_value = '___'
+
+
 def test_not_similar(ednafull_simplified: Dict[str, int]):
 	a = next(align(
 		'AC', 'GT', ednafull_simplified, 5, 5, 'regular_water'
@@ -102,3 +111,72 @@ def test_short_aligned_no_identical_nucleotides(embeddings: Dict[str, np.ndarray
 	assert a.seq1 == 'ACG'
 	assert a.seq2 == 'ACG'
 	assert a.score == 45
+
+
+def test_short_aligned_4_identical_nucleotides(embeddings: Dict[str, np.ndarray], mocker):
+	set_up(mocker)
+	with pytest.warns(MultipleMaxValuesInDistanceMatrix, match="Multiple best-scoring alignments are possible"):
+		a = next(align(
+			'AAAA', 'AAAA', embeddings, 5, 5, 'word_embeddings_water'
+		))
+	assert a.seq1 == 'AAA'
+	assert a.seq2 == 'AAA'
+	assert a.score == 45
+
+
+def test_short_aligned_no_identical_nucleotides_return_multiple(embeddings: Dict[str, np.ndarray], mocker):
+	set_up(mocker)
+	generator = align(
+		'AAAA', 'AAAA', embeddings, 5, 5, 'word_embeddings_water',return_multiple_alignments=True
+	)
+	for a in generator:
+		assert a.seq1 == 'AAA'
+		assert a.seq2 == 'AAA'
+		assert a.score == 45
+
+
+def test_short_aligned_4_matching_nucleotides(embeddings: Dict[str, np.ndarray], mocker):
+	set_up(mocker)
+	with pytest.warns(MultipleMaxValuesInDistanceMatrix, match="Multiple best-scoring alignments are possible"):
+		a = next(align(
+			'ACGA', 'ACGA', embeddings, 5, 5, 'word_embeddings_water'
+		))
+	assert a.seq1 == 'ACG'
+	assert a.seq2 == 'ACG'
+	assert a.score == 45
+
+
+def test_short_aligned_4_partially_matching_nucleotides_no_mocks(embeddings: Dict[str, np.ndarray]):
+	a = next(align(
+		'ACGA', 'ACGT', embeddings, 5, 5, 'word_embeddings_water'
+	))
+	assert a.seq1 == 'ACG'
+	assert a.seq2 == 'ACG'
+	assert a.score == 45
+
+
+def test_two_triples_matching_nucleotides_no_mocks(embeddings: Dict[str, np.ndarray]):
+	a = next(align(
+		'ACGACG', 'ACGACG', embeddings, 5, 5, 'word_embeddings_water'
+	))
+	assert a.seq1 == 'ACGACG'
+	assert a.seq2 == 'ACGACG'
+	assert a.score == 90
+
+
+def test_two_triples_matching_nucleotides_no_mocks_affine_gap_penalty(embeddings: Dict[str, np.ndarray]):
+	a = next(align(
+		'ACGACG', 'ACGACG', embeddings, 10, 5, 'word_embeddings_water'
+	))
+	assert a.seq1 == 'ACGACG'
+	assert a.seq2 == 'ACGACG'
+	assert a.score == 90
+
+
+def test_two_triples_matching_nucleotides_with_one_gap_no_mocks(embeddings: Dict[str, np.ndarray]):
+	a = next(align(
+		'ACGACG', 'ACGTACG', embeddings, 5, 5, 'word_embeddings_water'
+	))
+	assert a.seq1 == 'ACG-ACG'
+	assert a.seq2 == 'ACGTACG'
+	assert a.score == 85
