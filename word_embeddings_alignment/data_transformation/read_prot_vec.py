@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from src import constants
+from word_embeddings_alignment.src import constants
 import pickle
 from typing import Dict
 
