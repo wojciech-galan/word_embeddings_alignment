@@ -31,19 +31,16 @@ def main(args: List[str] = sys.argv[1:]):
 		for alignment in align(seq_1, seq_2, EDNAFULL_matrix, parsed_args.gap_open, parsed_args.gap_extend,
 		                       parsed_args.representation, parsed_args.multiple):
 			print(alignment)
-			print(alignment.score)
 	elif parsed_args.dna_or_protein == 'dna' and parsed_args.representation == 'word_embeddings':
 		raise NotImplementedError
 	elif parsed_args.dna_or_protein == 'protein' and parsed_args.representation == 'classic':
 		for alignment in align(seq_1, seq_2, bl.BLOSUM(45), parsed_args.gap_open, parsed_args.gap_extend,
 		                       parsed_args.representation, parsed_args.multiple):
 			print(alignment)
-			print(alignment.score)
 	else:
 		for alignment in align(seq_1, seq_2, PROTEIN_EMBEDDINGS, parsed_args.gap_open, parsed_args.gap_extend,
 		                       parsed_args.representation, parsed_args.multiple):
 			print(alignment)
-			print(alignment.score)
 
 
 if __name__ == "__main__":
