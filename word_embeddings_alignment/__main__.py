@@ -23,7 +23,7 @@ def main(args: List[str] = sys.argv[1:]):
 	parser.add_argument("--representation", type=str, help='either classic or word embeddings (default) representation',
 	                    choices=['classic', 'word_embeddings'], default='word_embeddings')
 	parser.add_argument("--multiple", action='store_true', help='''calculate separate alignments for every max value
-	 in distance matrix''')
+	 in distance matrix (multiple pairwise alignments are returned)''')
 	parsed_args = parser.parse_args(args)
 	seq_1 = read_raw_seq(parsed_args.seq_1)
 	seq_2 = read_raw_seq(parsed_args.seq_2)
