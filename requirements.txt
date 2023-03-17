@@ -1,3 +1,8 @@
+numpy
+blosum
+pytest
+pytest-cov
+pytest-mock
 uvicorn
 fastapi
 pydantic
