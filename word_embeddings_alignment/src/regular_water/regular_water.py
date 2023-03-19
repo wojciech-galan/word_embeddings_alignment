@@ -17,7 +17,7 @@ GAP = '-'
 def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Numeric],
                                            gap_open: Numeric, gap_extend: Numeric) -> Tuple[np.ndarray, np.ndarray]:
 	# create initial matrices
-	distance_matrix = np.full((len(seq_a) + 1, len(seq_b) + 1), np.NaN)
+	distance_matrix = np.full((len(seq_a) + 1, len(seq_b) + 1), np.NaN, dtype=np.half)
 	traceback_matrix = np.zeros((len(seq_a), len(seq_b)), dtype=np.byte)
 	# initialize first row and column
 	distance_matrix[0, :] = 0
@@ -46,8 +46,6 @@ def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int],
 	curr_element_a, curr_element_b = max_element_indices
 	alignment = SimpleAlignmentRepresentation(distance_matrix[max_element_indices])
 	while distance_matrix[curr_element_a, curr_element_b]:
-		# if curr_element_a == 4 and curr_element_b == 9:
-		# 	print(traceback_matrix[curr_element_a - 1, curr_element_b - 1])
 		direction = traceback_matrix[curr_element_a - 1, curr_element_b - 1]
 		if direction & (SLANT | UPPER | LEFT) in AMBIGUOUS_DIRECTIONS:
 			warnings.warn("Multiple best-scoring alignments are possible", MultipleEquallyScoredPathsFromMaxTo0)

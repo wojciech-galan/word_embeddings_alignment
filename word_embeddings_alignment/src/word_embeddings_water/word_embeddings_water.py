@@ -21,7 +21,7 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 	if word_length != 3:
 		raise NotImplementedError
 	# create initial matrix
-	distance_matrix = np.zeros((len(seq_a) + 1, len(seq_b) + 1))
+	distance_matrix = np.zeros((len(seq_a) + 1, len(seq_b) + 1), dtype=np.half)
 	traceback_matrix = np.zeros((len(seq_a), len(seq_b)), dtype=np.byte)
 	# fill the matrix
 	for i, char_a in enumerate(seq_a, 1):
@@ -67,7 +67,7 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 				traceback_matrix[i - 1, j - 1] |= LEFT if maximum == left else 0
 			else:
 				# should never happen
-				pdb.set_trace()
+				raise NotImplementedError()
 
 	return distance_matrix, traceback_matrix
 
