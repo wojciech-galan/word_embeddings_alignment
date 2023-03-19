@@ -53,4 +53,4 @@ def test_eq_equal_elements(simple_alignment: SimpleAlignmentRepresentation):
 
 
 def test_str(simple_alignment: SimpleAlignmentRepresentation):
-	assert str(simple_alignment) == 'ATC\nA-C\n9'
+	assert str(simple_alignment) == 'ATC\nA-C\nScore:9.00'
