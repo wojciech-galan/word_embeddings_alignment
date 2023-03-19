@@ -17,7 +17,7 @@ GAP = '-'
 def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, matrix: Dict[str, Numeric],
                                            gap_open: Numeric, gap_extend: Numeric) -> Tuple[np.ndarray, np.ndarray]:
 	# create initial matrices
-	distance_matrix = np.full((len(seq_a) + 1, len(seq_b) + 1), np.NaN)
+	distance_matrix = np.full((len(seq_a) + 1, len(seq_b) + 1), np.NaN, dtype=np.half)
 	traceback_matrix = np.zeros((len(seq_a), len(seq_b)), dtype=np.byte)
 	# initialize first row and column
 	distance_matrix[0, :] = 0
