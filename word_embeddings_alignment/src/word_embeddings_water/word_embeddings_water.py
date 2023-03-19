@@ -67,7 +67,7 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 				traceback_matrix[i - 1, j - 1] |= LEFT if maximum == left else 0
 			else:
 				# should never happen
-				pdb.set_trace()
+				raise NotImplementedError()
 
 	return distance_matrix, traceback_matrix
 
