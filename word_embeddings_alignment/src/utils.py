@@ -1,3 +1,4 @@
+import re
 import warnings
 from typing import Dict
 from typing import List
@@ -12,6 +13,7 @@ from word_embeddings_alignment.src.my_warnings import MultipleMaxValuesInDistanc
 from word_embeddings_alignment.src.types import Numeric
 from word_embeddings_alignment.src.simple_alignment_representation import SimpleAlignmentRepresentation
 
+FASTA_PATTERN = re.compile('>(\S+)\s+(.+)[^>]', re.MULTILINE)
 ALIGNMENT_TYPES = {
 	'word_embeddings': word_embeddings_water,
 	'classic': regular_water
@@ -51,3 +53,9 @@ def find_indices_of_max(array: np.ndarray) -> List[Tuple[int, int]]:
 def read_raw_seq(f_path: str) -> str:
 	with open(f_path) as f:
 		return ''.join(f.readlines())
+
+
+def read_fasta_seq(f_path: str) -> str:
+	with open(f_path) as f:
+		for id_, seq in re.findall(FASTA_PATTERN, f.read()):
+			yield id_, ''.join(seq.split())
