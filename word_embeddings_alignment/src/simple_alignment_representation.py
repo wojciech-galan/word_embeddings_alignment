@@ -1,13 +1,13 @@
 class SimpleAlignmentRepresentation(object):
 
-	def __init__(self, score, seq1_start, seq2_start):
+	def __init__(self, score, seq1_end, seq2_end):
 		super().__init__()
 		self._seq1 = []
 		self._seq2 = []
-		self._seq1_start_position = seq1_start
-		self._seq2_start_position = seq2_start
-		self._seq1_end_position = None
-		self._seq2_end_position = None
+		self._seq1_start_position = None
+		self._seq2_start_position = None
+		self._seq1_end_position = seq1_end
+		self._seq2_end_position = seq2_end
 		self._score = score
 
 	@property

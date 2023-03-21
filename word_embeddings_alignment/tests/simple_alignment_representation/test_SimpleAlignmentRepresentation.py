@@ -13,8 +13,8 @@ def simple_alignment() -> SimpleAlignmentRepresentation:
 
 def test_internal_data(simple_alignment: SimpleAlignmentRepresentation):
 	assert simple_alignment._score == 9
-	assert simple_alignment._seq1_start_position == 3
-	assert simple_alignment._seq2_start_position == 3
+	assert simple_alignment._seq1_end_position == 3
+	assert simple_alignment._seq2_end_position == 3
 
 
 def test_properties(simple_alignment: SimpleAlignmentRepresentation):
