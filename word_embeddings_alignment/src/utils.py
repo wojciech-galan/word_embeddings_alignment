@@ -59,3 +59,7 @@ def read_fasta_seq(f_path: str) -> str:
 	with open(f_path) as f:
 		for id_, seq in re.findall(FASTA_PATTERN, f.read()):
 			yield id_, ''.join(seq.split())
+
+
+def write_fasta_alignment():
+	pass
