@@ -35,7 +35,7 @@ def test_eq_different_type(simple_alignment: SimpleAlignmentRepresentation):
 def test_eq_diff_score(simple_alignment: SimpleAlignmentRepresentation):
 	simple_alignment_copy = copy.deepcopy(simple_alignment)
 	simple_alignment_copy._score = 77
-	assert (simple_alignment == simple_alignment_copy) is False
+	assert simple_alignment != simple_alignment_copy
 
 
 def test_eq_diff_seq1(simple_alignment: SimpleAlignmentRepresentation):
