@@ -5,7 +5,7 @@ from word_embeddings_alignment.src.simple_alignment_representation import Simple
 
 @pytest.fixture(scope="module")
 def simple_alignment() -> SimpleAlignmentRepresentation:
-	s = SimpleAlignmentRepresentation(9)
+	s = SimpleAlignmentRepresentation(9, 3, 3)
 	s._seq1 = ['C', 'T', 'A']
 	s._seq2 = ['C', '-', 'A']
 	return s
@@ -13,6 +13,8 @@ def simple_alignment() -> SimpleAlignmentRepresentation:
 
 def test_internal_data(simple_alignment: SimpleAlignmentRepresentation):
 	assert simple_alignment._score == 9
+	assert simple_alignment._seq1_start_position == 3
+	assert simple_alignment._seq2_start_position == 3
 
 
 def test_properties(simple_alignment: SimpleAlignmentRepresentation):
