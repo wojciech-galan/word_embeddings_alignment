@@ -29,12 +29,14 @@ def align(seq_a: str, seq_b: str, matrix: Dict[str, Numeric], gap_open: Numeric,
 	                                                                           gap_extend)
 	max_indices_list = find_indices_of_max(distance_matrix)
 	if distance_matrix[max_indices_list[0]] == 0:
-		alignment = SimpleAlignmentRepresentation(distance_matrix[max_indices_list[0]])
+		alignment = SimpleAlignmentRepresentation(distance_matrix[max_indices_list[0]], max_indices_list[0][0] - 1, max_indices_list[0][1] - 1)
 		yield alignment
 	elif return_multiple_alignments:
+		# do alignmentu wpakować pozycje początku i końca
 		for max_indices in max_indices_list:
 			yield traceback(distance_matrix, max_indices, traceback_matrix, seq_a, seq_b)
 	else:
+		# do alignmentu wpakować pozycje początku i końca
 		if len(max_indices_list) > 1:
 			warnings.warn("Multiple best-scoring alignments are possible", MultipleMaxValuesInDistanceMatrix)
 		yield traceback(distance_matrix, max_indices_list[0], traceback_matrix, seq_a, seq_b)

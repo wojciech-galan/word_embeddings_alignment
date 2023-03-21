@@ -44,7 +44,7 @@ def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int],
               seq_a: str, seq_b: str):
 	previous_direction = 0
 	curr_element_a, curr_element_b = max_element_indices
-	alignment = SimpleAlignmentRepresentation(distance_matrix[max_element_indices])
+	alignment = SimpleAlignmentRepresentation(distance_matrix[max_element_indices], curr_element_a - 1, curr_element_b - 1)
 	while distance_matrix[curr_element_a, curr_element_b]:
 		direction = traceback_matrix[curr_element_a - 1, curr_element_b - 1]
 		if direction & (SLANT | UPPER | LEFT) in AMBIGUOUS_DIRECTIONS:
@@ -76,6 +76,7 @@ def traceback(distance_matrix: np.ndarray, max_element_indices: Tuple[int, int],
 			alignment.add_data(seq_a[curr_element_a - 1], GAP)
 			curr_element_a -= 1
 			previous_direction = UPPER
+	alignment.set_start_position(curr_element_a, curr_element_b)
 	return alignment
 
 
