@@ -19,13 +19,15 @@ class FAstaAlignment(object):
 	                                             seq2: str):
 		aligned_seq_1 = [simple_alignment.seq2_start_position * GAP_CHAR, seq1[:simple_alignment.seq1_start_position]]
 		aligned_seq_2 = [seq2[:simple_alignment.seq2_start_position], simple_alignment.seq1_start_position * GAP_CHAR]
-		aligned_seq_1.append(simple_alignment.seq1)
-		aligned_seq_2.append(simple_alignment.seq2)
+		aligned_seq_1.append(simple_alignment.seq1.replace('-', GAP_CHAR))
+		aligned_seq_2.append(simple_alignment.seq2.replace('-', GAP_CHAR))
 		chars_of_seq_1_already_used = simple_alignment.seq1_start_position + len(
-			simple_alignment.seq1) - simple_alignment.seq1.count(GAP_CHAR)
+			simple_alignment.seq1) - simple_alignment.seq1.count('-')
+		#print(chars_of_seq_1_already_used)
 		chars_of_seq_2_already_used = simple_alignment.seq2_start_position + len(
-			simple_alignment.seq2) - simple_alignment.seq2.count(GAP_CHAR)
-		print(len(seq2) - chars_of_seq_2_already_used)
+			simple_alignment.seq2) - simple_alignment.seq2.count('-')
+		#print(simple_alignment.seq2_start_position, len(
+		#	simple_alignment.seq2), simple_alignment.seq2.count(GAP_CHAR), chars_of_seq_2_already_used)
 		seq1_end_gap_len = len(seq2) - chars_of_seq_2_already_used
 		seq2_end_gap_len = len(seq1) - chars_of_seq_1_already_used
 		aligned_seq_1.extend([seq1_end_gap_len * GAP_CHAR, seq1[chars_of_seq_1_already_used:]])
