@@ -28,13 +28,13 @@ class SimpleAlignmentRepresentation(object):
 
 	@property
 	def seq1_start_position(self):
-		if self._seq1_start_position:
+		if self._seq1_start_position is not None:
 			return self._seq1_start_position
 		raise AttributeNotSet('Not set yet')
 
 	@property
 	def seq2_start_position(self):
-		if self._seq2_start_position:
+		if self._seq2_start_position is not None:
 			return self._seq2_start_position
 		raise AttributeNotSet('Not set yet')
 

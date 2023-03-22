@@ -42,6 +42,10 @@ def test_mathing_sequences():
 	assert a.score == 15
 	assert a.seq1 == 'ACG'
 	assert a.seq2 == 'ACG'
+	assert a.seq1_start_position == 0
+	assert a.seq2_start_position == 0
+	assert a.seq1_end_position == 2
+	assert a.seq2_end_position == 2
 
 
 def test_1_linear_gap(linear_gap__distance_matrix_1: np.ndarray, linear_gap__traceback_matrix_1: np.ndarray):
@@ -66,6 +70,10 @@ def test_2_linear_gap(linear_gap__distance_matrix_2: np.ndarray, linear_gap__tra
 	assert a.score == 29
 	assert a.seq1 == 'AATA-AA'
 	assert a.seq2 == 'AATATAA'
+	assert a.seq1_start_position == 1
+	assert a.seq2_start_position == 0
+	assert a.seq1_end_position == 6
+	assert a.seq2_end_position == 6
 
 
 def test_3_linear_gap(linear_gap__distance_matrix_3: np.ndarray, linear_gap__traceback_matrix_3: np.ndarray):

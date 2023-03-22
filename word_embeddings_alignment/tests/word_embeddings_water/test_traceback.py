@@ -16,6 +16,10 @@ def test_short_aligned_no_identical_nucleotides(
 	assert a.seq1 == 'ACG'
 	assert a.seq2 == 'ACG'
 	assert a.score == 45
+	assert a.seq1_start_position == 0
+	assert a.seq2_start_position == 0
+	assert a.seq1_end_position == 2
+	assert a.seq2_end_position == 2
 
 
 def test_short_aligned_4_identical_nucleotides_indices_4_4(
@@ -96,6 +100,10 @@ def test_short_aligned_4_matching_nucleotides_indices_4_4(
 	assert a.seq1 == 'CGA'
 	assert a.seq2 == 'CGA'
 	assert a.score == 45
+	assert a.seq1_start_position == 1
+	assert a.seq2_start_position == 1
+	assert a.seq1_end_position == 3
+	assert a.seq2_end_position == 3
 
 
 def test_short_aligned_4_matching_nucleotides_indices_4_3(
@@ -160,6 +168,10 @@ def test_short_aligned_4_partially_matching_nucleotides(
 	assert a.seq1 == 'ACG'
 	assert a.seq2 == 'ACG'
 	assert a.score == 45
+	assert a.seq1_start_position == 0
+	assert a.seq2_start_position == 0
+	assert a.seq1_end_position == 2
+	assert a.seq2_end_position == 2
 
 
 def test_two_triples_matching_nucleotides(
@@ -240,6 +252,10 @@ def test_two_triples_matching_nucleotides_with_one_gap(
 	assert a.seq1 == 'ACG-ACG'
 	assert a.seq2 == 'ACGTACG'
 	assert a.score == 85
+	assert a.seq1_start_position == 0
+	assert a.seq2_start_position == 0
+	assert a.seq1_end_position == 5
+	assert a.seq2_end_position == 6
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs(
@@ -256,6 +272,10 @@ def test_two_triples_matching_nucleotides_with_one_gap_no_mocks_swapped_seqs(
 	assert a.seq1 == 'ACGTACG'
 	assert a.seq2 == 'ACG-ACG'
 	assert a.score == 85
+	assert a.seq1_start_position == 0
+	assert a.seq2_start_position == 0
+	assert a.seq1_end_position == 6
+	assert a.seq2_end_position == 5
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_end_no_mocks(
@@ -288,6 +308,10 @@ def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_b
 	assert a.seq1 == 'ACG-ACG'
 	assert a.seq2 == 'ACGTACG'
 	assert a.score == 85
+	assert a.seq1_start_position == 2
+	assert a.seq2_start_position == 0
+	assert a.seq1_end_position == 7
+	assert a.seq2_end_position == 6
 
 
 def test_two_triples_matching_nucleotides_with_one_gap_additional_chars_at_the_beginning_affine_gap_score(
