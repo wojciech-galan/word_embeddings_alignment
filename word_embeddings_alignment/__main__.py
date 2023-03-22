@@ -5,6 +5,7 @@ from typing import List
 from word_embeddings_alignment.src.utils import align
 from word_embeddings_alignment.src.utils import read_raw_seq
 from word_embeddings_alignment.src.utils import read_fasta_seq
+from word_embeddings_alignment.src.fasta_alignment import FAstaAlignment
 from word_embeddings_alignment.src.regular_water.matrices.edna_full import EDNAFULL_matrix
 from word_embeddings_alignment.data_transformation import read_prot_vec
 
@@ -27,32 +28,40 @@ def main(args: List[str] = sys.argv[1:]):
 	                    choices=['classic', 'word_embeddings'], default='word_embeddings')
 	parser.add_argument("--multiple", action='store_true', help='''calculate separate alignments for every max value
 	 in distance matrix (multiple pairwise alignments are returned)''')
-	parser.add_argument("--format", type=str, help='either raw or fasta',
+	parser.add_argument("--sequence_format", type=str, help='either raw or fasta',
+	                    choices=['raw', 'fasta'], default='fasta')
+	parser.add_argument("--alignment_format", type=str, help='either raw or fasta',
 	                    choices=['raw', 'fasta'], default='fasta')
 	parser.add_argument('-v', '--version', action='version', version='%(prog)s {}'.format(__version__))
 	parsed_args = parser.parse_args(args)
-	if parsed_args.format == 'raw':
+	if parsed_args.sequence_format == 'raw':
 		seq_1 = read_raw_seq(parsed_args.seq_1)
 		seq_2 = read_raw_seq(parsed_args.seq_2)
-	elif parsed_args.format == 'fasta':
-		seq_1 = next(read_fasta_seq(parsed_args.seq_1))[1]
-		seq_2 = next(read_fasta_seq(parsed_args.seq_2))[1]
+	elif parsed_args.sequence_format == 'fasta':
+		id_1, seq_1 = next(read_fasta_seq(parsed_args.seq_1))
+		id_2, seq_2 = next(read_fasta_seq(parsed_args.seq_2))
 	else:
 		raise NotImplementedError('Not implemented yet')
 	if parsed_args.dna_or_protein == 'dna' and parsed_args.representation == 'classic':
-		for alignment in align(seq_1, seq_2, EDNAFULL_matrix, parsed_args.gap_open, parsed_args.gap_extend,
-		                       parsed_args.representation, parsed_args.multiple):
-			print(alignment)
+		alignment_generator = align(seq_1, seq_2, EDNAFULL_matrix, parsed_args.gap_open, parsed_args.gap_extend,
+		                       parsed_args.representation, parsed_args.multiple)
 	elif parsed_args.dna_or_protein == 'dna' and parsed_args.representation == 'word_embeddings':
-		raise NotImplementedError
+		raise NotImplementedError('Not implemented yet')
 	elif parsed_args.dna_or_protein == 'protein' and parsed_args.representation == 'classic':
-		for alignment in align(seq_1, seq_2, bl.BLOSUM(45), parsed_args.gap_open, parsed_args.gap_extend,
-		                       parsed_args.representation, parsed_args.multiple):
-			print(alignment)
+		alignment_generator = align(seq_1, seq_2, bl.BLOSUM(45), parsed_args.gap_open, parsed_args.gap_extend,
+		                       parsed_args.representation, parsed_args.multiple)
 	else:
-		for alignment in align(seq_1, seq_2, PROTEIN_EMBEDDINGS, parsed_args.gap_open, parsed_args.gap_extend,
-		                       parsed_args.representation, parsed_args.multiple):
+		alignment_generator = align(seq_1, seq_2, PROTEIN_EMBEDDINGS, parsed_args.gap_open, parsed_args.gap_extend,
+		                       parsed_args.representation, parsed_args.multiple)
+
+	for alignment in alignment_generator:
+		if parsed_args.alignment_format == 'raw':
 			print(alignment)
+		elif parsed_args.alignment_format == 'fasta':
+			fasta_alignment = FAstaAlignment(alignment, seq_1, seq_2, id_1, id_2)
+			print(fasta_alignment)
+		else:
+			raise NotImplementedError('Not implemented yet')
 
 
 if __name__ == "__main__":
