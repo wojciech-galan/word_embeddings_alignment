@@ -5,7 +5,7 @@ from typing import List
 from word_embeddings_alignment.src.utils import align
 from word_embeddings_alignment.src.utils import read_raw_seq
 from word_embeddings_alignment.src.utils import read_fasta_seq
-from word_embeddings_alignment.src.fasta_alignment import FAstaAlignment
+from word_embeddings_alignment.src.fasta_alignment import FastaAlignment
 from word_embeddings_alignment.src.regular_water.matrices.edna_full import EDNAFULL_matrix
 from word_embeddings_alignment.data_transformation import read_prot_vec
 
@@ -58,7 +58,7 @@ def main(args: List[str] = sys.argv[1:]):
 		if parsed_args.alignment_format == 'raw':
 			print(alignment)
 		elif parsed_args.alignment_format == 'fasta':
-			fasta_alignment = FAstaAlignment(alignment, seq_1, seq_2, id_1, id_2)
+			fasta_alignment = FastaAlignment(alignment, seq_1, seq_2, id_1, id_2)
 			print(fasta_alignment)
 		else:
 			raise NotImplementedError('Not implemented yet')
