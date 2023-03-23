@@ -3,7 +3,7 @@ from word_embeddings_alignment.src.simple_alignment_representation import Simple
 GAP_CHAR = '.'
 
 
-class FAstaAlignment(object):
+class FastaAlignment(object):
 
 	def __init__(self, simple_alignment: SimpleAlignmentRepresentation, seq1: str, seq2: str, seq1_id: str,
 	             seq2_id: str):
