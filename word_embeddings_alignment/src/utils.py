@@ -1,5 +1,6 @@
 import re
 import warnings
+import tempfile
 from typing import Dict
 from typing import List
 from typing import Tuple
@@ -60,6 +61,12 @@ def read_raw_seq(f_path: str) -> str:
 def read_fasta_seq(f_path: str) -> str:
 	with open(f_path) as f:
 		for id_, seq in re.findall(FASTA_PATTERN, f.read()):
+			yield id_, ''.join(seq.split())
+
+
+def read_fasta_buffer(f: tempfile.SpooledTemporaryFile) -> str:
+	with f:
+		for id_, seq in re.findall(FASTA_PATTERN, f.read().decode()):
 			yield id_, ''.join(seq.split())
 
 
