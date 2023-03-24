@@ -13,7 +13,7 @@ from word_embeddings_alignment.src.my_warnings import MultipleMaxValuesInDistanc
 from word_embeddings_alignment.src.types import Numeric
 from word_embeddings_alignment.src.simple_alignment_representation import SimpleAlignmentRepresentation
 
-FASTA_PATTERN = re.compile('>(\S+)\s+(.+)[^>]', re.MULTILINE)
+FASTA_PATTERN = re.compile('^>(\S+)\s+([^>]+)', re.MULTILINE)
 ALIGNMENT_TYPES = {
 	'word_embeddings': word_embeddings_water,
 	'classic': regular_water
