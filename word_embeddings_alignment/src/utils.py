@@ -31,6 +31,7 @@ def align(seq_a: str, seq_b: str, matrix: Dict[str, Numeric], gap_open: Numeric,
 	max_indices_list = find_indices_of_max(distance_matrix)
 	if distance_matrix[max_indices_list[0]] == 0:
 		alignment = SimpleAlignmentRepresentation(distance_matrix[max_indices_list[0]], max_indices_list[0][0] - 1, max_indices_list[0][1] - 1)
+		alignment.set_start_position(0, 0)
 		yield alignment
 	elif return_multiple_alignments:
 		for max_indices in max_indices_list:
