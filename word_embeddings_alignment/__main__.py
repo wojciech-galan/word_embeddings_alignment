@@ -9,7 +9,7 @@ from word_embeddings_alignment.src.fasta_alignment import FastaAlignment
 from word_embeddings_alignment.src.regular_water.matrices.edna_full import EDNAFULL_matrix
 from word_embeddings_alignment.data_transformation import read_prot_vec
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 PROTEIN_EMBEDDINGS = read_prot_vec.read()
 
