@@ -58,6 +58,9 @@ class SimpleAlignmentRepresentation(object):
 			return self.__dict__ == other.__dict__
 		return False
 
+	def __len__(self):
+		return len(self._seq1)
+
 
 class AttributeNotSet(RuntimeError):
 	pass
