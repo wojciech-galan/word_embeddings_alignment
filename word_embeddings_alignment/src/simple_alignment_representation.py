@@ -59,7 +59,7 @@ class SimpleAlignmentRepresentation(object):
 		return False
 
 	def __len__(self):
-		return len(self._seq1)
+		return len(self.seq1)
 
 
 class AttributeNotSet(RuntimeError):
