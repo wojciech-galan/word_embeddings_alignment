@@ -1,4 +1,5 @@
 import sys
+import pickle
 import argparse
 import blosum as bl
 from typing import List
@@ -7,11 +8,9 @@ from word_embeddings_alignment.src.utils import read_raw_seq
 from word_embeddings_alignment.src.utils import read_fasta_seq
 from word_embeddings_alignment.src.fasta_alignment import FastaAlignment
 from word_embeddings_alignment.src.regular_water.matrices.edna_full import EDNAFULL_matrix
-from word_embeddings_alignment.data_transformation import read_prot_vec
+from word_embeddings_alignment.src import constants
 
 __version__ = '0.1.1'
-
-PROTEIN_EMBEDDINGS = read_prot_vec.read()
 
 
 def main(args: List[str] = sys.argv[1:]):
@@ -25,7 +24,7 @@ def main(args: List[str] = sys.argv[1:]):
 	parser.add_argument("gap_extend", type=float, help='gap extend penalty', default=1)
 	parser.add_argument("dna_or_protein", type=str, help='sequence type', choices=['dna', 'protein'])
 	parser.add_argument("--representation", type=str, help='either classic or word embeddings (default) representation',
-	                    choices=['classic', 'word_embeddings'], default='word_embeddings')
+	                    choices=['classic', 'protvec', 'prott5'], default='prott5')
 	parser.add_argument("--multiple", action='store_true', help='''calculate separate alignments for every max value
 	 in distance matrix (multiple pairwise alignments are returned)''')
 	parser.add_argument("--sequence_format", type=str, help='either raw or fasta',
@@ -50,8 +49,15 @@ def main(args: List[str] = sys.argv[1:]):
 	elif parsed_args.dna_or_protein == 'protein' and parsed_args.representation == 'classic':
 		alignment_generator = align(seq_1, seq_2, bl.BLOSUM(45), parsed_args.gap_open, parsed_args.gap_extend,
 		                       parsed_args.representation, parsed_args.multiple)
+	elif parsed_args.dna_or_protein == 'protein' and parsed_args.representation == 'prott5':
+		with open(constants.PROTT5_VEC_PICKLE, 'rb') as f:
+			prott5 = pickle.load(f)
+		alignment_generator = align(seq_1, seq_2, prott5, parsed_args.gap_open, parsed_args.gap_extend,
+		                       parsed_args.representation, parsed_args.multiple)
 	else:
-		alignment_generator = align(seq_1, seq_2, PROTEIN_EMBEDDINGS, parsed_args.gap_open, parsed_args.gap_extend,
+		with open(constants.PROT_VEC_PICKLE, 'rb') as f:
+			prot_vec = pickle.load(f)
+		alignment_generator = align(seq_1, seq_2, prot_vec, parsed_args.gap_open, parsed_args.gap_extend,
 		                       parsed_args.representation, parsed_args.multiple)
 
 	for alignment in alignment_generator:
