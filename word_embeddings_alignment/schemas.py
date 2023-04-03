@@ -8,6 +8,12 @@ class SequenceType(str, Enum):
     protein: str = 'protein'
 
 
+class Representation(str, Enum):
+    protvec: str = 'protvec'
+    classic: str = 'classic'
+    prott5: str = 'prott5'
+
+
 class InputData(BaseModel):
     seq_1: str
     seq_2: str
