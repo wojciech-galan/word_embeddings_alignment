@@ -121,5 +121,15 @@ def euclidean_distance(vector1: np.ndarray, vector2: np.ndarray):
 	return np.linalg.norm(vector1-vector2)
 
 
+def cosine_similarity(vector1: np.ndarray, vector2: np.ndarray):
+	nominator = np.dot(vector1, vector2)
+
+	a_norm = np.sqrt(np.sum(vector1 ** 2))
+	b_norm = np.sqrt(np.sum(vector2 ** 2))
+	denominator = a_norm * b_norm
+
+	return nominator / denominator
+
+
 def points_for_word_embeddings(word_embeddings: Dict[str, np.ndarray], seq1: str, seq2: str):
 	return 60/(1 + euclidean_distance(word_embeddings[seq1],  word_embeddings[seq2])) - 15

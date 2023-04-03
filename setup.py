@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="word_embeddings_alignment",
-    version='0.0.1',
+    version='0.1.1',
     description='Calculates local pairwise alignment using word embeddings representation',
     url='https://github.com/wojciech-galan/word_embeddings_alignment',
     author='Wojciech Gałan',

@@ -1,5 +1,9 @@
 {
   "prot_dir":"data/word_embeddings/prot",
   "prot_file":"protVec_100d_3grams.csv",
-  "prot_file_serialized":"protVec_100d_3grams.pickle"
+  "prot_file_serialized":"protVec_100d_3grams.pickle",
+  "PROTt5_dir":"data/word_embeddings/PROTt5",
+  "PROTt5_file":"vectors.h5",
+  "PROTt5_amino_acids":"aminoacids.fasta",
+  "PROTt5_file_serialized":"PROTt5.pickle"
 }

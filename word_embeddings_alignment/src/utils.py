@@ -16,8 +16,9 @@ from word_embeddings_alignment.src.simple_alignment_representation import Simple
 
 FASTA_PATTERN = re.compile('^>(\S+)\s+([^>]+)', re.MULTILINE)
 ALIGNMENT_TYPES = {
-	'word_embeddings': word_embeddings_water,
-	'classic': regular_water
+	'protvec': word_embeddings_water,
+	'classic': regular_water,
+	'prott5': regular_water
 }
 
 
