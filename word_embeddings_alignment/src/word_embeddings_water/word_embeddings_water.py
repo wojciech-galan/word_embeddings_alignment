@@ -28,7 +28,8 @@ def create_distance_and_traceback_matrices(seq_a: str, seq_b: str, word_embeddin
 		for j, char_b in enumerate(seq_b, 1):
 			# gap_penalty equals gap_extend if there is already a gap in a previous cell, else gap_open
 			if (i + 2 <= len(seq_a)) and (j + 2 <= len(seq_b)):
-				slant = distance_matrix[i - 1, j - 1] + points_for_word_embeddings(word_embeddings, seq_a[i-1:i+2], seq_b[j-1:j+2])
+				slant = distance_matrix[i - 1, j - 1] + cosine_similarity(word_embeddings[seq_a[i-1:i+2]],
+				                                                          word_embeddings[seq_b[j-1:j+2]])
 			else:
 				slant = 0
 			upper = distance_matrix[i - 1, j] - (
@@ -129,7 +130,3 @@ def cosine_similarity(vector1: np.ndarray, vector2: np.ndarray):
 	denominator = a_norm * b_norm
 
 	return nominator / denominator
-
-
-def points_for_word_embeddings(word_embeddings: Dict[str, np.ndarray], seq1: str, seq2: str):
-	return 60/(1 + euclidean_distance(word_embeddings[seq1],  word_embeddings[seq2])) - 15
